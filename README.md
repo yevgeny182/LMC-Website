@@ -1,59 +1,52 @@
-# LoginPage
+# Project README
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
+## Overview
 
-## Development server
+This project is a backend application designed to handle authentication and CRUD (Create, Read, Update, Delete) operations. It utilizes Node.js with Express as the server framework and MongoDB as the database for data storage. The front-end technologies used in developing this application follow the MEAN stack architecture.
 
-To start a local development server, run:
+### Technologies Used
+- **Frontend**: 
+  - **Angular**: A platform for building mobile and desktop web applications.
+  - **Angular Material**: UI component library for Angular applications, providing a set of reusable components.
 
-```bash
-ng serve
-```
+- **Backend**: 
+  - **Node.js**: JavaScript runtime for building server-side applications.
+  - **Express**: Web application framework for Node.js to handle routes and middleware.
+  - **MongoDB**: NoSQL database for storing user and application data.
+  - **Mongoose**: ODM (Object Data Modeling) library for MongoDB and Node.js.
+  - **Environment Variables**: Managed using dotenv for configuration.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### MongoDB
+- **Version**: 8.0.6
+- **Cluster**: A MongoDB cluster was created to manage the database.
+- **URI Connection**: The application connects to MongoDB using a connection string stored in environment variables for security.
 
-## Code scaffolding
+## Features
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Authentication (AUTH)
+- Implemented user authentication using JSON Web Tokens (JWT).
+- Registration endpoint for new users.
+- Login endpoint for existing users.
+- Middleware to protect routes requiring authentication.
 
-```bash
-ng generate component component-name
-```
+### CRUD Operations
+- **Create**: Endpoint to create new resources (e.g., users, posts).
+- **Read**: Endpoint to retrieve data (e.g., get user details, list all posts).
+- **Update**: Endpoint to update existing resources.
+- **Delete**: Endpoint to delete resources.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Data Structure
+- **Models**: Data is structured using Mongoose models, which define the schema for the collections in MongoDB.
+  - Example models include `User`, `Post`, etc.
+- **Routes**: Organized into separate route files to manage different functionalities. Each model has corresponding routes for CRUD operations.
 
-```bash
-ng generate --help
-```
+## Setup and Installation
 
-## Building
+### Prerequisites
+- Node.js (Version 14 or above)
+- MongoDB (Version 8.0.6)
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Installation Steps
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
