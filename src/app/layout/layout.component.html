@@ -1,0 +1,42 @@
+<!-- layout.component.html -->
+<div class="dashboard">
+
+    <nav class="sidebar" id="sidebar">
+      <img src="assets/LMCLogo.svg" alt="Logo" class="logo">
+  
+      <div class="user-profile" *ngIf="user">
+        <img src="assets/user-default.svg" alt="User Profile" class="user-icon">
+        <div class="user-info">
+          <span class="user-name">{{ user.user.name}}</span>
+          <span class="user-position">{{ user.user.role }}</span>
+        </div>
+      </div>
+      
+  
+      <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+  
+      <ul>
+        <li><a routerLink="/dashboard" routerLinkActive="active"><img src="assets/dashboard-white.svg" class="sidebar-icon"> <span>Dashboard</span></a></li>
+        <li><a routerLink="/career" routerLinkActive="active"><img src="assets/career-white.svg" class="sidebar-icon"> <span>Career Path</span></a></li>
+        <li><a routerLink="#"><img src="assets/checked-white.svg" class="sidebar-icon"> <span>Learning Course</span></a></li>
+        <li><a routerLink="#"><img src="assets/dashboard-white.svg" class="sidebar-icon"><span>Assessments</span></a></li>
+        <li><a routerLink="#"><img src="assets/career-white.svg" class="sidebar-icon"><span>Module Library</span></a></li>
+        <li><a routerLink="#"><img src="assets/checked-white.svg" class="sidebar-icon"><span>Teams</span></a></li>
+        <li><a routerLink="/users" routerLinkActive="active"><img src="assets/user-default.svg" class="sidebar-icon"><span>Users</span></a></li>
+        <li><a routerLink="#"><img src="assets/checked-white.svg" class="sidebar-icon"><span>Reports</span></a></li>
+        <li><a routerLink="#"><img src="assets/user-default.svg" class="sidebar-icon"> <span>Profile</span></a></li>
+        <li><a routerLink="#"><img src="assets/dashboard-white.svg" class="sidebar-icon"><span>Help and Feedback</span></a></li>
+        <li><a routerLink="#"><img src="assets/dashboard-white.svg" class="sidebar-icon"><span>What's New</span></a></li>
+      </ul>
+    </nav>
+  
+    <div class="main-content" id="mainContent">
+      <header class="topbar">
+        <img src="assets/notification-bell-white.svg" class="sidebar-icon" style="cursor: pointer;" title="Notification"> 
+        <img src="assets/logout-white.svg" class="sidebar-icon" (click)="onLogout()" style="cursor: pointer;" title="Logout?"> 
+      </header>
+      <router-outlet></router-outlet>
+    </div>
+  
+  </div>
+  

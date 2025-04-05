@@ -1,0 +1,38 @@
+<div class="modal" [ngClass]="{ 'show': isOpenInviteModal }" *ngIf="isOpenInviteModal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Invite a User</h2>
+  
+      <form (ngSubmit)="addUser()">
+        <div>
+          <label>Name:</label>
+          <input type="text" [(ngModel)]="name" name="name" required />
+        </div>
+  
+        <div>
+          <label>Email:</label>
+          <input type="email" [(ngModel)]="email" name="email" required />
+        </div>
+  
+        <div>
+          <label>Password:</label>
+          <input type="password" [(ngModel)]="password" name="password" required />
+        </div>
+  
+        <div>
+          <label>Role:</label>
+          <select [(ngModel)]="role" name="role" required>
+            <option value="" disabled>Select role</option>
+            <option value="Admin">Admin</option>
+            <option value="Trainee">Trainee</option>
+          </select>
+        </div>
+  
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+
+
+  

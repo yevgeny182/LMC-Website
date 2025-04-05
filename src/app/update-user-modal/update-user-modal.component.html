@@ -1,0 +1,45 @@
+ 
+<div class="modal" [ngClass]="{ 'show': isOpenUpdateModal }" >
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Update User</h2>
+  
+      <form (ngSubmit)="updateUser()">
+        <div>
+          <label>Name:</label>
+          <input type="text" [(ngModel)]="name" name="name" required />
+        </div>
+  
+        <div>
+          <label>Email:</label>
+          <input type="email" [(ngModel)]="email" name="email" required />
+        </div>
+  
+        <div>
+          <label>Password:</label>
+          <input type="password" [(ngModel)]="password" name="password" placeholder="Leave blank to keep current" />
+        </div>
+  
+        <div>
+          <label>Role:</label>
+          <select [(ngModel)]="role" name="role" required>
+            <option value="" disabled>Select role</option>
+            <option value="Admin">Admin</option>
+            <option value="Trainee">Trainee</option>
+          </select>
+        </div>
+  
+        <div>
+          <label>Status:</label>
+          <select [(ngModel)]="status" name="status" required>
+            <option [ngValue]="true">Active</option>
+            <option [ngValue]="false">Inactive</option>
+          </select>
+        </div>
+  
+  
+        <button type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+  

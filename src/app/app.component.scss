@@ -1,0 +1,144 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+:host {
+    display: block; 
+    height: 98vh; 
+    overflow: hidden; 
+}
+
+
+.container {
+    display: flex;
+    height: 100vh; /* Full height of the viewport */
+    flex-grow: 1;
+}
+
+/* Left panel */
+.left-panel {
+    flex: 1;
+    background-color: #F5F5F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.right-panel {
+    flex: 1; 
+    background-color: #FFFFFF; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column; 
+    padding: 10px; 
+}
+
+
+.left-panel img {
+    max-width: 90%; 
+    max-height: 100vh; 
+    height: auto; 
+}
+
+/* Right panel image */
+.right-panel img {
+    max-width: 80%; /* Smaller logo */
+    height: auto;
+    margin-bottom: 20px; /* Space below the logo */
+}
+
+/* Form container */
+.form-container {
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+}
+
+/* Form and button styles */
+form {
+    display: flex;
+    flex-direction: column; 
+    width: 100%;
+    max-width: 450px;
+    padding: 20px; 
+}
+
+
+input {
+    margin: 10px 0;
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.password-container {
+    display: flex; 
+    align-items: center; 
+    width: 100%; 
+}
+
+button {
+    padding: 10px; 
+    background-color: #5087C7; 
+    color: white; 
+    border: none; 
+    border-radius: 15px; 
+    cursor: pointer; 
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 10px; /* Space above the button */
+}
+
+.buttonGmail {
+    padding: 0px;
+    background-color: transparent; 
+    color: #000000; 
+    border: 1px solid #000000; 
+    border-radius: 15px; 
+    cursor: pointer; 
+    width: auto; 
+    max-width: 450px; 
+    box-sizing: border-box; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 1rem; 
+    margin-top: 10px; 
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.google-logo {
+    width: 25px; 
+    height: auto; 
+    margin-right: 10px; 
+    margin-top: 15px;
+    display: inline-block; 
+    vertical-align: middle; 
+}
+
+.lmc-log {
+    width: 15vw; 
+    max-width: 40px; 
+    margin-right: 8px; 
+}
+
+.forgot-password {
+    margin: 10px 0; 
+    text-align: right; 
+    color: #5087C7; 
+    cursor: pointer; 
+}
+
+.forgot-password:hover {
+    text-decoration: underline; /* Underline on hover */
+}
