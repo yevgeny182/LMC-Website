@@ -4,54 +4,101 @@
     <button class="invite-btn" (click)="openInviteModal()">Invite User</button>
   </div>
   <!-- Search Bar -->
+  
+   <div class="search-filter-container">
+      <div class="filter-wrapper">
+        <select id="filter" name="filter" class="filter-dropdown">
+          <option value="" disabled selected> Select Filter</option>
+          <option value="name">Name</option>
+          <option value="email">Email</option>
+        </select>
+      
+   </div>
+
   <div class="search-container">
     <input type="text" placeholder="Search users..." class="search-bar">
     <img src="assets/search-blue.svg" class="search-icon" alt="Search">
+    </div>
   </div>
 
-  <table class="users-table">
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Role</th>
-        <th>View</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <td><img src="assets/user-default.svg" class="action-icon"> {{ user.email }}</td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.status === true ? 'Active' : user.status === false ? 'Inactive' : 'No Status' }}</td>
-        <td>{{ user.role }}</td>
-        <td>
-          <img src="assets/view.svg" class="action-icon" title="View" (click)="openConfirmViewModal(user)">
-        </td>
-        <td>
-          <img src="assets/edit.svg" class="action-icon" title="Edit" (click)="openUpdateModal(user)">
-        </td>        
-        <td>
-          <img src="assets/trash.svg" class="action-icon" title="Delete" (click)="openConfirmDeleteModal(user)">
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</section>
+  <div class="table-wrapper">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Role</th>
+            <th>View</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td><img src="assets/user-default.svg" class="action-icon"> {{ user.email }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.status === true ? 'Active' : user.status === false ? 'Inactive' : 'No Status' }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+              <img src="assets/view.svg" class="action-icon" style="width: 25px; height:25px;" (click)="openConfirmViewModal(user)">
+            </td>
+            <td>
+              <img src="assets/edit.svg" class="action-icon" title="Edit" (click)="openUpdateModal(user)">
+            </td>        
+            <td>
+              <img src="assets/trash.svg" class="action-icon" title="Delete" (click)="openConfirmDeleteModal(user)">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>
 
+</section>
+      <div class ="pagination">
+        <!-- <button class="page-btn" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+          &lt;
+        </button> -->
+        
+        <div class="pagination">
+          <button class="page-btn" disabled>&lt;</button>
+          
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          
+          <button class="page-btn">&gt;</button>
+        </div>
+        
+       <!--  <button 
+            class="page-btn" 
+            *ngFor="let page of totalPagesArray" 
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)">
+            {{ page }}
+          </button> -->
+
+         <!--  <button class="page-btn" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+            &gt;
+          </button> -->
+      </div>  
+<p class="bottombar">Total results: {{users.length}} </p>
+
+<!-- DELETE -->
 <div class="modal" *ngIf="isOpenDeleteModal" style="display: block;">
   <div class="modal-content">
       <span class="close" (click)="closeConfirmDeleteModal()">&times;</span>
       <h2>Confirm Deletion</h2>
       <p>Are you sure you want to delete {{ userToDelete?.name }}?</p>
-      <button (click)="deleteUsers()">Confirm Delete</button>
-      <button (click)="closeConfirmDeleteModal()">Cancel</button>
+      <div class="button-container">
+        <button class="delete-btn" (click)="deleteUsers()">Confirm Delete</button>
+        <button class="no-delete-btn" (click)="closeConfirmDeleteModal()">Cancel</button>
+      </div>
+      
   </div>
 </div>
 
-<!-- DELETE -->
+<!-- VIEWING -->
 <div class="modal" *ngIf="isOpenViewModal" style="display: block;">
   <div class="modal-content">
       <span class="close" (click)="closeConfirmViewModal()">&times;</span>

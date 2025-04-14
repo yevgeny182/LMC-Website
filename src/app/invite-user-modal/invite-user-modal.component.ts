@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-invite-user-modal',
   standalone: true,
   imports: [CommonModule, FormsModule],
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './invite-user-modal.component.html',
   styleUrls: ['./invite-user-modal.component.scss']
 })
@@ -59,7 +60,10 @@ export class InviteUserModalComponent {
     };
 
     if (!payload.name || !payload.email || !payload.password || !payload.role) {
-      alert('Please fill in all fields.');
+      this.snackBar.open('Please fill in all fields', 'Close', {
+        duration: 4000,
+        panelClass: ['snack-error'], 
+      });
       return;
     }
 
@@ -76,7 +80,7 @@ export class InviteUserModalComponent {
       this.closeModal();
       
       this.snackBar.open('User added successfully!', 'Close', {
-        duration: 3000, // Duration in milliseconds
+        duration: 4000, // Duration in milliseconds
         panelClass: ['snack-success'], // Custom class for styling
       });
       

@@ -12,22 +12,76 @@
         </div>
       </div>
       
-  
       <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
   
       <ul>
-        <li><a routerLink="/dashboard" routerLinkActive="active"><img src="assets/dashboard-white.svg" class="sidebar-icon"> <span>Dashboard</span></a></li>
-        <li><a routerLink="/career" routerLinkActive="active"><img src="assets/career-white.svg" class="sidebar-icon"> <span>Career Path</span></a></li>
-        <li><a routerLink="#"><img src="assets/checked-white.svg" class="sidebar-icon"> <span>Learning Course</span></a></li>
-        <li><a routerLink="#"><img src="assets/dashboard-white.svg" class="sidebar-icon"><span>Assessments</span></a></li>
-        <li><a routerLink="#"><img src="assets/career-white.svg" class="sidebar-icon"><span>Module Library</span></a></li>
-        <li><a routerLink="#"><img src="assets/checked-white.svg" class="sidebar-icon"><span>Teams</span></a></li>
-        <li><a routerLink="/users" routerLinkActive="active"><img src="assets/user-default.svg" class="sidebar-icon"><span>Users</span></a></li>
-        <li><a routerLink="#"><img src="assets/checked-white.svg" class="sidebar-icon"><span>Reports</span></a></li>
-        <li><a routerLink="#"><img src="assets/user-default.svg" class="sidebar-icon"> <span>Profile</span></a></li>
-        <li><a routerLink="#"><img src="assets/dashboard-white.svg" class="sidebar-icon"><span>Help and Feedback</span></a></li>
-        <li><a routerLink="#"><img src="assets/dashboard-white.svg" class="sidebar-icon"><span>What's New</span></a></li>
-      </ul>
+        <li>
+          <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <img src="assets/dashboard-white.svg" class="sidebar-icon">
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/career" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <img src="assets/career-white.svg" class="sidebar-icon">
+            <span>Career Path</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/learning" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <img src="assets/school-white.svg" class="sidebar-icon">
+            <span>Learning Course</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/assessments" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <img src="assets/clipboard-white.svg" class="sidebar-icon">
+            <span>Assessments</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/modules" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <img src="assets/book-white.svg" class="sidebar-icon">
+            <span>Module Library</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/teams" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <img src="assets/teams-white.svg" class="sidebar-icon">
+            <span>Teams</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <img src="assets/users-white.svg" class="sidebar-icon">
+            <span>Users</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/reports" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <img src="assets/reports-white.svg" class="sidebar-icon">
+            <span>Reports</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <img src="assets/profile-white.svg" class="sidebar-icon">
+            <span>Profile</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/help" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <img src="assets/file-question-white.svg" class="sidebar-icon">
+            <span>Help and Feedback</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/whats-new" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <img src="assets/megaphone-white.svg" class="sidebar-icon">
+            <span>What's New</span>
+          </a>
+        </li>
+      </ul>      
     </nav>
   
     <div class="main-content" id="mainContent">

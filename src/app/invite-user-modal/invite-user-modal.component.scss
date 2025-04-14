@@ -1,21 +1,22 @@
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 50%; /* Center horizontally */
+  top: 50%; /* Center vertically */
+  transform: translate(-50%, -50%); /* Adjust to center modal correctly */
+  width: 100%; /* Modal width (can be adjusted as needed) */
+  height: auto; /* Auto height based on content */
+  overflow: hidden; /* Prevent scroll on the modal itself */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* Center the modal */
+    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Width of the modal */
+    width: 50%; /* Width of the modal */
 }
 
 .close {
@@ -34,4 +35,110 @@
 
 .show {
     display: block; /* Show the modal when isOpen is true */
+}
+input{
+    margin: 10px 0;
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.button-wrapper{
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    color: white;
+    background-color: #3AB54A;
+    padding: 10px 20px;
+    font-weight: 200;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+}
+.button-wrapper:hover{
+    background-color: #2f9440;
+}
+.form-group{
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+label{
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+.custom-dropdown {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    appearance: none; /* Hides default arrow in most browsers */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 18px;
+  }
+  .title{
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+  }
+  
+  .snack-error .mdc-snackbar__surface {
+    background-color: #ec6262 !important;
+    color: white !important;
+  }
+  .snack-error .mdc-button__label {
+    color: white !important;
+  }
+  .snack-success .mdc-snackbar__surface{
+    background-color: #5bd85f !important;
+    color: white !important;
+  }
+  .snack-success .mdc-button__label {
+    color: white !important;
+  }
+  .no-delete-btn{
+    display: flex;
+    color: white;
+    background: #e74c3c;
+    padding: 10px 20px;
+    font-weight: 200;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+    
+  }
+  .delete-btn{
+    display: flex;
+    color: white;
+    background: #3AB54A;;
+    padding: 10px 20px;
+    font-weight: 200;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+  }
+  .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* ensures items can wrap on small screens */
+  }
+  
+  @media (max-width: 500px) {
+    .button-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px; /* smaller vertical spacing */
+    }
+    .delete-btn, .no-delete-btn{
+        justify-content: center;
+        width: 80%;
+    }
+  
 }

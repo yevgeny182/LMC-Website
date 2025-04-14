@@ -2,7 +2,9 @@
 <div class="modal" [ngClass]="{ 'show': isOpenUpdateModal }" >
     <div class="modal-content">
       <span class="close" (click)="closeModal()">&times;</span>
-      <h2>Update User</h2>
+      <div class="title">
+        <h2>Update User</h2>
+      </div>
   
       <form (ngSubmit)="updateUser()">
         <div>
@@ -17,28 +19,28 @@
   
         <div>
           <label>Password:</label>
-          <input type="password" [(ngModel)]="password" name="password" placeholder="Leave blank to keep current" />
+          <input type="password" [(ngModel)]="password" name="password" placeholder="Change the user password here" />
         </div>
   
-        <div>
+        <div class="form-group">
           <label>Role:</label>
-          <select [(ngModel)]="role" name="role" required>
+          <select [(ngModel)]="role" name="role" required class="custom-dropdown">
             <option value="" disabled>Select role</option>
             <option value="Admin">Admin</option>
             <option value="Trainee">Trainee</option>
           </select>
         </div>
   
-        <div>
+        <div class="form-group">
           <label>Status:</label>
-          <select [(ngModel)]="status" name="status" required>
+          <select [(ngModel)]="status" name="status" required class="custom-dropdown">
             <option [ngValue]="true">Active</option>
             <option [ngValue]="false">Inactive</option>
           </select>
         </div>
   
   
-        <button type="submit">Save</button>
+        <button type="submit" class="button-wrapper">Save</button>
       </form>
     </div>
   </div>

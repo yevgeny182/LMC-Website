@@ -1,83 +1,107 @@
 .users-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .users-table thead {
-    background-color: #5086C6; /* Header background color */
-    color: white; /* Header text color */
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.users-table thead {
+  background-color: #5086C6; /* Header background color */
+  color: white; /* Header text color */
+}
+
+.users-table th, .users-table td {
+  padding: 10px;
+  text-align: left;
+}
+
+.users-table tbody tr:nth-child(even) {
+  background-color: #EFEFEF; /* Even row color */
+}
+
+.users-table tbody tr:nth-child(odd) {
+  background-color: #FFFFFF; /* Odd row color */
+}
+
+.action-icon {
+  width: 20px; /* Adjust icon size */
+  height: 20px; /* Adjust icon size */
+  cursor: pointer; /* Change cursor on hover */
+  margin: 0 5px; /* Add margin between icons */
+  transition: transform 0.2s; /* Add transition for hover effect */
+}
+
+.action-icon:hover {
+  transform: scale(1.1); /* Slightly enlarge the icon on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .users-table th, .users-table td {
-    padding: 10px;
-    text-align: left;
-  }
-  
-  .users-table tbody tr:nth-child(even) {
-    background-color: #EFEFEF; /* Even row color */
-  }
-  
-  .users-table tbody tr:nth-child(odd) {
-    background-color: #FFFFFF; /* Odd row color */
-  }
-  
-  .action-icon {
-    width: 20px; /* Adjust icon size */
-    height: 20px; /* Adjust icon size */
-    cursor: pointer; /* Change cursor on hover */
-    margin: 0 5px; /* Add margin between icons */
-    transition: transform 0.2s; /* Add transition for hover effect */
-  }
-  
-  .action-icon:hover {
-    transform: scale(1.1); /* Slightly enlarge the icon on hover */
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .users-table th, .users-table td {
-      padding: 8px; /* Reduce padding on smaller screens */
-    }
-    
-    .users-table {
-      font-size: 14px; /* Adjust font size on smaller screens */
-    }
-  }
-  .content{
-    padding: 20px;
+    padding: 8px; /* Reduce padding on smaller screens */
   }
 
-  .search-container {
-    position: relative;
-    width: 30%;
-    margin: 20px 0;
+  .users-table {
+    font-size: 14px; /* Adjust font size on smaller screens */
   }
+}
+
+.content {
+  padding: 20px;
+}
+
+/* === Search & Filter Section === */
+.search-filter-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.filter-wrapper {
+  display: flex;
+  align-items: center;
   
-  .search-bar {
-    width: 100%;
-    padding: 10px 40px 10px 15px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .search-icon {
-    position: absolute;
-    right: -35px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.2s ease;
-  }
-  
-  .search-icon:hover {
-    opacity: 1;
-  }
-  
+}
+
+.filter-dropdown {
+  padding: 10px;
+  width: 200px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search-container {
+  position: relative;
+  width: 250px;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-icon {
+  position: absolute;
+  right: -35px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.search-icon:hover {
+  opacity: 1;
+}
+
+/* === Buttons === */
 .invite-btn {
   background-color: #3AB54A;
   color: white;
@@ -88,38 +112,41 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-  
+
 .invite-btn:hover {
   background-color: #2f9440;
 }
+
+/* === Header === */
 .users-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 }
 
+/* === Modal === */
 .modal {
-  display: none; 
-  position: fixed; 
-  z-index: 1000; 
+  display: none;
+  position: fixed;
+  z-index: 1000;
   left: 0;
   top: 0;
-  width: 100%; 
-  height: 100%; 
-  overflow: auto; 
-  background-color: rgba(0,0,0,0.6); 
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
 }
 
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto; 
+  margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; 
-  max-width: 500px; 
-  border-radius: 8px; 
+  width: 80%;
+  max-width: 500px;
+  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
@@ -137,7 +164,7 @@
   cursor: pointer;
 }
 
-/* Add this to your global styles or component styles */
+/* === Toast Notifications === */
 .snack-success {
   background-color: #4caf50; /* Green color */
   color: white; /* Text color */
@@ -147,4 +174,42 @@
   background-color: #f44336; /* Red color for errors */
   color: white; /* Text color */
 }
+.bottombar{
+  left: 250px;
+  right: 0;
+  justify-content: flex-end;
+  display: flex;
+  z-index: 1000;
+  padding: 25px;
+}
 
+.pagination {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.page-btn {
+  padding: 5px 10px;
+  border: none;
+  background-color: #eee;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.page-btn.active {
+  background-color: #4B86BD;
+  color: white;
+}
+
+.page-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.table-wrapper{
+  overflow-x: auto;
+  overflow-y: auto;
+  width: 100%;
+  max-height: 50vh;
+}
