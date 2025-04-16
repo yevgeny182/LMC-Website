@@ -5,8 +5,8 @@
     left: 0;
     top: 0;
     width: 100%; /* Full width */
-    height: auto; /* Full height */
-    overflow: hidden; /* Enable scroll if needed */
+    height: 100vh; /* Full height */
+    overflow: auto;/* Enable scroll if needed */
     background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
@@ -15,9 +15,8 @@
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 50%; /* Width of the modal */
+  width: 50%; 
 }
-
 .close {
     color: #aaa;
     float: right;
@@ -86,21 +85,6 @@ label{
     align-items: center;
     justify-content: center; 
   }
-  
-  .snack-error .mdc-snackbar__surface {
-    background-color: #ec6262 !important;
-    color: white !important;
-  }
-  .snack-error .mdc-button__label {
-    color: white !important;
-  }
-  .snack-success .mdc-snackbar__surface{
-    background-color: #5bd85f !important;
-    color: white !important;
-  }
-  .snack-success .mdc-button__label {
-    color: white !important;
-  }
   .no-delete-btn{
     display: flex;
     color: white;
@@ -122,6 +106,7 @@ label{
     border-radius: 6px;
     border: none;
   }
+
   .button-container {
     display: flex;
     justify-content: center;

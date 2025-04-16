@@ -28,14 +28,14 @@ export class LayoutComponent {
  }
 
  ngOnInit() {
-  const storedUser = sessionStorage.getItem('user'); // Retrieve from sessionStorage
-  if (storedUser) {
-    this.user = JSON.parse(storedUser);
-    if(this.user.user.status === false){
-      this.router.navigate(['/login']);
-    }
-    /* console.log('[LayoutComponent] User loaded from sessionStorage:', this.user);
-    console.log(this.user.user.name) */
+  if(typeof window !== 'undefined'){
+    const storedUser = sessionStorage.getItem('user'); // Retrieve from sessionStorage
+      if (storedUser) {
+        this.user = JSON.parse(storedUser);
+        if(this.user.user.status === false){
+          this.router.navigate(['/login']);
+        }
+      }
   }
 }
 

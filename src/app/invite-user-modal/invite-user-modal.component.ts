@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -6,8 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-invite-user-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  encapsulation: ViewEncapsulation.None,
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './invite-user-modal.component.html',
   styleUrls: ['./invite-user-modal.component.scss']
 })
@@ -18,7 +18,7 @@ export class InviteUserModalComponent {
   @Input() userToEdit: any = null;
   @Output() userUpdatedEvent = new EventEmitter<void>()
 
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar, private http: HttpClient) {}
   name: string = '';
   email: string = '';
   password: string = '';
@@ -67,28 +67,24 @@ export class InviteUserModalComponent {
       return;
     }
 
-    fetch('http://localhost:5048/RegisterUser', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('User added:', data);
-      this.resetForm();
-      this.userAddedEvent.emit();
-      this.closeModal();
-      
+   this.http.post('http://localhost:5048/RegisterUser', payload).subscribe({
+    next: (data) => {
+      this.userAddedEvent.emit()
+      this.closeModal()
+
       this.snackBar.open('User added successfully!', 'Close', {
-        duration: 4000, // Duration in milliseconds
-        panelClass: ['snack-success'], // Custom class for styling
+        duration: 4000,
+        panelClass: ['snack-success'],
       });
-      
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Something went wrong');
-    });
+    },
+    error: (err) => {
+      console.error('error: ', err)
+      this.snackBar.open('Something went wrong', 'Close', {
+        duration: 4000,
+        panelClass: ['snack-error'],
+      })
+    }
+   })
   }
 
  

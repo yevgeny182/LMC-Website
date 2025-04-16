@@ -4,3 +4,22 @@ body {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.snack-error .mdc-snackbar__surface {
+    background-color: #ec6262 !important;
+    color: white !important;
+  }
+  
+  .snack-error .mdc-button__label {
+    color: white !important;
+  }
+  
+  .snack-success .mdc-snackbar__surface {
+    background-color: #5bd85f !important;
+    color: white !important;
+  }
+  
+  .snack-success .mdc-button__label {
+    color: white !important;
+  }
+  

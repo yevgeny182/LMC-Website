@@ -89,7 +89,7 @@
   <div class="modal-content">
       <span class="close" (click)="closeConfirmDeleteModal()">&times;</span>
       <h2>Confirm Deletion</h2>
-      <p>Are you sure you want to delete {{ userToDelete?.name }}?</p>
+      <p>Are you sure you want to delete user: [{{ userToDelete?.name }}]?</p>
       <div class="button-container">
         <button class="delete-btn" (click)="deleteUsers()">Confirm Delete</button>
         <button class="no-delete-btn" (click)="closeConfirmDeleteModal()">Cancel</button>

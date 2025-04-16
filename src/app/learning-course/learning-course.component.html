@@ -1,0 +1,72 @@
+<section class="content">
+  <h1>Welcome to the Learning Course!</h1>
+
+  <!-- Add Course Form -->
+  <form (ngSubmit)="addCourse()" #courseForm="ngForm">
+    <div>
+      <label>Course Code:</label>
+      <input type="text" name="courseCode" [(ngModel)]="course.courseCode" required />
+    </div>
+    <div>
+      <label>Course Title:</label>
+      <input type="text" name="courseTitle" [(ngModel)]="course.courseTitle" required />
+    </div>
+    <div>
+      <label>Population:</label>
+      <input type="number" name="population" [(ngModel)]="course.population" required />
+    </div>
+    <div>
+      <label>Units:</label>
+      <input type="number" name="units" [(ngModel)]="course.courseUnits" required />
+    </div>
+    <div>
+      <label>Status:</label>
+      <select name="courseStatus" [(ngModel)]="course.courseStatus" required>
+        <option value="Open">Open</option>
+        <option value="Closed">Closed</option>
+      </select>
+    </div>
+
+    <!-- Later you can add select input for students -->
+
+    <button type="submit">Add Course</button>
+  </form>
+
+  <hr />
+
+  <!-- Display List of Courses -->
+  <div class="table-wrapper">
+    <table *ngIf="courses.length > 0" class="users-table">
+      <thead>
+        <tr>
+          <th>Course Code</th>
+          <th>Course Title</th>
+          <th>Population</th>
+          <th>Units</th>
+          <th>Status</th>
+          <th>View</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of courses">
+          <td>{{ course.courseCode }}</td>
+          <td>{{ course.courseTitle }}</td>
+          <td>{{ course.population }}</td>
+          <td>{{ course.courseUnits}}</td>
+          <td>{{ course.courseStatus }}</td>
+          <td>
+            <img src="assets/view.svg" class="action-icon" style="width: 25px; height:25px;" >
+          </td>
+          <td>
+            <img src="assets/edit.svg" class="action-icon" title="Edit" >
+          </td>        
+          <td>
+            <img src="assets/trash.svg" class="action-icon" title="Delete" >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

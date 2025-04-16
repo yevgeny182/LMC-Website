@@ -1,0 +1,64 @@
+.content {
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  width: 100%;
+  max-height: 50vh;
+}
+
+/* Full-width and clean table layout */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: max-content;
+  table-layout: auto;
+}
+
+/* Sticky header with blue background */
+.users-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #5086C6;
+  color: white;
+  z-index: 2;
+  word-wrap: break-word;
+  text-align: left;
+}
+
+/* Table cell styling */
+.users-table th,
+.users-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  word-break: break-word;
+  white-space: normal;
+  max-width: 150px;
+  overflow-wrap: break-word;
+}
+
+/* Alternating row colors */
+.users-table tbody tr:nth-child(even) {
+  background-color: #EFEFEF;
+}
+.users-table tbody tr:nth-child(odd) {
+  background-color: #FFFFFF;
+}
+
+/* Action icons */
+.action-icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: transform 0.2s;
+}
+
+.action-icon:hover {
+  transform: scale(1.1);
+}
