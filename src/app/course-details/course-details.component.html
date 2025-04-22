@@ -1,0 +1,36 @@
+<div class="course-details-container">
+    <span class="material-icons back-icon" (click)="goBack()">arrow_back</span> 
+  
+    <div class="course-info-card">
+      <h2>📘 Course Information</h2>
+  
+      <p><strong>Course Code:</strong> {{ selectedCourse?.courseCode }}</p>
+      <p><strong>Course Title:</strong> {{ selectedCourse?.courseTitle }}</p>
+      <p><strong>Population:</strong> {{ selectedCourse?.students?.length }} / {{ selectedCourse?.population }}</p>
+      <p><strong>Course Units:</strong> {{ selectedCourse?.courseUnits }}</p>
+      <p><strong>Course Status:</strong> {{ selectedCourse?.courseStatus }}</p>
+    </div>
+  
+    <div class="students-section">
+      <div class="students-header">
+        <h3>👨‍🎓 Students Enrolled</h3>
+        <button class="add-students-button">Add Students</button>
+      </div>
+  
+      <table class="students-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of selectedCourse?.students">
+            <td>{{ student?.name }}</td>
+            <td>{{ student?.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

@@ -1,7 +1,7 @@
 <!-- layout.component.html -->
 <div class="dashboard">
 
-    <nav class="sidebar" id="sidebar">
+    <nav class="sidebar" id="sidebar" #sidebarRef>
       <img src="assets/LMCLogo.svg" alt="Logo" class="logo">
   
       <div class="user-profile" *ngIf="user">
@@ -84,7 +84,7 @@
       </ul>      
     </nav>
   
-    <div class="main-content" id="mainContent">
+    <div class="main-content" id="mainContent" #mainContentRef>
       <header class="topbar">
         <img src="assets/notification-bell-white.svg" class="sidebar-icon" style="cursor: pointer;" title="Notification"> 
         <img src="assets/logout-white.svg" class="sidebar-icon" (click)="onLogout()" style="cursor: pointer;" title="Logout?"> 

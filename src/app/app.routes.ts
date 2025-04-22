@@ -6,6 +6,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { CareerPathComponent } from './career-path/career-path.component';
 import { LearningCourseComponent } from './learning-course/learning-course.component';
 import { AssessmentsComponent } from './assessments/assessments.component';
+import { CourseDetailsComponent } from './course-details/course-details.component';
 
 
 export const routes: Routes = [
@@ -21,6 +22,7 @@ export const routes: Routes = [
           { path: 'users', component: UsersComponent },
           { path: 'career', component: CareerPathComponent },
           { path: 'learning-course', component: LearningCourseComponent},
+          { path: 'learning-course/:id', component: CourseDetailsComponent},
           { path: 'assessments', component: AssessmentsComponent},
           { path: '**', redirectTo: 'dashboard' }
         ]

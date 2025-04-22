@@ -1,0 +1,73 @@
+.course-details-container {
+    max-width: 75vw;
+    margin: 2rem auto;
+    padding: 1rem;
+    border-radius: 12px;
+    background: #f9f9f9;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    color: #007bff;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+  
+  .course-info-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .students-section {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .students-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .add-students-button {
+    background-color: #28a745;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .students-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .students-table th, .students-table td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+  }
+  .back-icon {
+    font-size: 28px;
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 1rem;
+    display: inline-block;
+    color: #333;
+    transition: color 0.2s ease;
+  
+    &:hover {
+      color: #1976d2; // subtle hover color
+    }
+  }
+  

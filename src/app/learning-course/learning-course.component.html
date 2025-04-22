@@ -1,47 +1,54 @@
 <section class="content">
-  <h1>Welcome to the Learning Course!</h1>
+ <div class="users-header">
+  <h1>Courses</h1>
 
-  <!-- Add Course Form -->
-  <form (ngSubmit)="addCourse()" #courseForm="ngForm">
-    <div>
-      <label>Course Code:</label>
-      <input type="text" name="courseCode" [(ngModel)]="course.courseCode" required />
-    </div>
-    <div>
-      <label>Course Title:</label>
-      <input type="text" name="courseTitle" [(ngModel)]="course.courseTitle" required />
-    </div>
-    <div>
-      <label>Population:</label>
-      <input type="number" name="population" [(ngModel)]="course.population" required />
-    </div>
-    <div>
-      <label>Units:</label>
-      <input type="number" name="units" [(ngModel)]="course.courseUnits" required />
-    </div>
-    <div>
-      <label>Status:</label>
-      <select name="courseStatus" [(ngModel)]="course.courseStatus" required>
-        <option value="Open">Open</option>
-        <option value="Closed">Closed</option>
-      </select>
-    </div>
+  <button class="invite-btn" (click)="openAddCourseModal()">Add Course</button>
 
-    <!-- Later you can add select input for students -->
+      <!-- Add Course Modal -->
+    <div class="modal" [ngClass]="{ 'show': viewCourseFormOpen }" *ngIf="viewCourseFormOpen">
+      <div class="modal-content">
+        <span class="close" (click)="closeAddCourseModal()"> &times; </span>
 
-    <button type="submit">Add Course</button>
-  </form>
-
-  <hr />
+        <h2>Add Course</h2>
+        <form (ngSubmit)="addCourse()" #courseForm="ngForm">
+          <div>
+            <label>Course Code:</label>
+            <input type="text" name="courseCode" [(ngModel)]="course.courseCode" required />
+          </div>
+          <div>
+            <label>Course Title:</label>
+            <input type="text" name="courseTitle" [(ngModel)]="course.courseTitle" required />
+          </div>
+          <div>
+            <label>Max Population:</label>
+            <input type="number" name="population" [(ngModel)]="course.population" required />
+          </div>
+          <div>
+            <label>Units:</label>
+            <input type="number" name="units" [(ngModel)]="course.courseUnits" required />
+          </div>
+          <div>
+            <label>Status:</label>
+            <select name="courseStatus" [(ngModel)]="course.courseStatus" required>
+              <option value="Open">Open</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+          <button type="submit">Add Course</button>
+        </form>
+      </div>
+    </div>
 
   <!-- Display List of Courses -->
   <div class="table-wrapper">
+  <!--   <hr /> -->
+    <p>Add courses for other students to join</p>
     <table *ngIf="courses.length > 0" class="users-table">
       <thead>
         <tr>
           <th>Course Code</th>
           <th>Course Title</th>
-          <th>Population</th>
+          <th>Max Population</th>
           <th>Units</th>
           <th>Status</th>
           <th>View</th>
@@ -53,20 +60,71 @@
         <tr *ngFor="let course of courses">
           <td>{{ course.courseCode }}</td>
           <td>{{ course.courseTitle }}</td>
-          <td>{{ course.population }}</td>
+          <td> {{ course?.students?.length }} / {{ course.population }}</td>
           <td>{{ course.courseUnits}}</td>
           <td>{{ course.courseStatus }}</td>
           <td>
-            <img src="assets/view.svg" class="action-icon" style="width: 25px; height:25px;" >
+            <a [routerLink]="['/learning-course', course._id]" title="View">
+              <img src="assets/view.svg" class="action-icon" style="width: 25px; height:25px;">
+            </a>
           </td>
           <td>
-            <img src="assets/edit.svg" class="action-icon" title="Edit" >
+            <img src="assets/edit.svg" class="action-icon" title="Edit" (click)="updateModal(course)">
           </td>        
           <td>
-            <img src="assets/trash.svg" class="action-icon" title="Delete" >
+            <img src="assets/trash.svg" class="action-icon" title="Delete" (click)="deleteModal(course)">
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+
+ </div>
 </section>
+
+  <!-- Update Modal -->
+  <div class="modal" [ngClass]="{'show': viewUpdateCourseModalOpen}" *ngIf="viewUpdateCourseModalOpen">
+    <div class="modal-content">
+      <span class="close" (click)="closeUpdateCourseModal()"> &times; </span>
+      <h2>Update Course</h2>
+      <form (ngSubmit)="updateCourse(selectedCourse)" #updateCourseForm="ngForm">
+        <div>
+          <label>Course Code:</label>
+          <input type="text" name="courseCode" [(ngModel)]="selectedCourse.courseCode" required />
+        </div>
+        <div>
+          <label>Course Title:</label>
+          <input type="text" name="courseTitle" [(ngModel)]="selectedCourse.courseTitle" required />
+        </div>
+        <div>
+          <label>Max Population:</label>
+          <input type="number" name="population" [(ngModel)]="selectedCourse.population" required />
+        </div>
+        <div>
+          <label>Units:</label>
+          <input type="number" name="units" [(ngModel)]="selectedCourse.courseUnits" required />
+        </div>
+        <div>
+          <label>Status:</label>
+          <select name="courseStatus" [(ngModel)]="selectedCourse.courseStatus" required>
+            <option value="Open">Open</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+        <button type="submit">Update Course</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal" [ngClass]="{ 'show': viewDeleteCourseModalOpen }" *ngIf="viewDeleteCourseModalOpen">
+    <div class="modal-content">
+      <span class="close" (click)="closeDeleteCourseModal()"> &times; </span>
+      <h3>Delete Course</h3>
+      <p>Are you sure you want to delete <strong>{{ selectedCourse?.courseTitle }}</strong>?</p>
+      <div style="display: flex; gap: 10px; margin-top: 1rem;">
+        <button (click)="deleteCourse(selectedCourse)">Yes, Delete</button>
+        <button (click)="closeDeleteCourseModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
