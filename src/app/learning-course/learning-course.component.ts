@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // ✅ Needed for ngForm
-import { CommonModule } from '@angular/common'; // ✅ Good practice for standalone
+import { CommonModule } from '@angular/common'; 
 
 @Component({
   selector: 'app-learning-course',
@@ -45,7 +45,39 @@ export class LearningCourseComponent {
 
   fetchCourse() {
     this.http.get<any[]>('http://localhost:5048/courses/getCourses')
-      .subscribe(data => this.courses = data);
+      .subscribe({
+        next: (data) =>{
+            this.courses = data
+            this.courses.forEach((course) =>{
+            if(course.population === course.students.length){
+              this.http.put(`http://localhost:5048/courses/updateCourse/${course._id}`, { courseStatus: 'Closed' })
+              .subscribe({ 
+                next: () =>{
+                    console.log('Course status updated')
+                },
+                error: (err) =>{
+                  console.log('Error', err)
+                }
+              })
+            }else{
+              if(course.courseStatus !== 'Closed'){
+              this.http.put(`http://localhost:5048/courses/updateCourse/${course._id}`, { courseStatus: 'Open' })
+              .subscribe({ 
+                next: () =>{
+                    console.log('Course status Open')
+                },
+                error: (err) =>{
+                  console.log('Error', err)
+                }
+              })
+              }
+            }
+            })
+        },
+        error: (err) =>{
+          console.log('Error:', err)
+        }
+      });
   }
 
   addCourse() {
@@ -106,6 +138,8 @@ export class LearningCourseComponent {
       });
       return;
     }
+    /* if(updatedCourse.population === this.course?.students?.length) */
+      
     this.http.put(`http://localhost:5048/courses/updateCourse/${course._id}`, updatedCourse)
     .subscribe({
       next: () => {

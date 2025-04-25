@@ -15,13 +15,19 @@
       
    </div>
 
-  <div class="search-container">
-    <input type="text" placeholder="Search users..." class="search-bar">
-    <img src="assets/search-blue.svg" class="search-icon" alt="Search">
+   <div class="search-filter-container">
+    <div class="search-wrapper">
+      <div class="search-container">
+        <input type="text" placeholder="Search users..." class="search-bar">
+        <img src="assets/search-blue.svg" class="search-icon" alt="Search">
+      </div>
+      
     </div>
-  </div>
-
-  <div class="table-wrapper">
+  </div>  
+   </div>
+  
+   <div class="table-and-pagination-wrapper">
+    <div class="table-wrapper">
       <table class="users-table">
         <thead>
           <tr>
@@ -35,7 +41,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of users">
+          <tr *ngFor="let user of paginatedUsers">
             <td><img src="assets/user-default.svg" class="action-icon"> {{ user.email }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.status === true ? 'Active' : user.status === false ? 'Inactive' : 'No Status' }}</td>
@@ -52,37 +58,43 @@
           </tr>
         </tbody>
       </table>
-</div>
-
+    </div>
+  
+    <div class="bottombar-wrapper">
+      <p class="bottombar">Total results: {{ users.length }}</p>
+    </div>
+  
+    <div class="pagination">
+      <button 
+        class="page-btn" 
+        [disabled]="currentPage === 1" 
+        (click)="goToPage(currentPage - 1)">
+        &lt;
+      </button>
+  
+      <button 
+        class="page-btn" 
+        *ngFor="let page of totalArrayPages" 
+        [class.active]="page === currentPage" 
+        (click)="goToPage(page)">
+        {{ page }}
+      </button>
+  
+      <button 
+        class="page-btn" 
+        [disabled]="currentPage === totalPages" 
+        (click)="goToPage(currentPage + 1)">
+        &gt;
+      </button>
+    </div>
+  </div>
+  
+    
 </section>
-      <div class ="pagination">
-        <!-- <button class="page-btn" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
-          &lt;
-        </button> -->
-        
-        <div class="pagination">
-          <button class="page-btn" disabled>&lt;</button>
-          
-          <button class="page-btn active">1</button>
-          <button class="page-btn">2</button>
-          <button class="page-btn">3</button>
-          
-          <button class="page-btn">&gt;</button>
-        </div>
-        
-       <!--  <button 
-            class="page-btn" 
-            *ngFor="let page of totalPagesArray" 
-            [class.active]="page === currentPage"
-            (click)="goToPage(page)">
-            {{ page }}
-          </button> -->
 
-         <!--  <button class="page-btn" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
-            &gt;
-          </button> -->
-      </div>  
-<p class="bottombar">Total results: {{users.length}} </p>
+
+
+
 
 <!-- DELETE -->
 <div class="modal" *ngIf="isOpenDeleteModal" style="display: block;">

@@ -2,35 +2,98 @@
     <span class="material-icons back-icon" (click)="goBack()">arrow_back</span> 
   
     <div class="course-info-card">
-      <h2>📘 Course Information</h2>
-  
+      <div class="students-header">
+        <h2>📘 Course Information</h2>
+        <button class="add-students-button" (click)="openModal()">Assign Teacher</button>
+      </div>
+
+      <p><strong>Teacher:</strong> <!-- {{ selectedCourse?.courseStatus }} --> Lebron James </p>
       <p><strong>Course Code:</strong> {{ selectedCourse?.courseCode }}</p>
       <p><strong>Course Title:</strong> {{ selectedCourse?.courseTitle }}</p>
       <p><strong>Population:</strong> {{ selectedCourse?.students?.length }} / {{ selectedCourse?.population }}</p>
       <p><strong>Course Units:</strong> {{ selectedCourse?.courseUnits }}</p>
       <p><strong>Course Status:</strong> {{ selectedCourse?.courseStatus }}</p>
     </div>
+
+    
   
     <div class="students-section">
       <div class="students-header">
         <h3>👨‍🎓 Students Enrolled</h3>
-        <button class="add-students-button">Add Students</button>
+        <button class="add-students-button" (click)="openModal()">Actions</button>
       </div>
   
-      <table class="students-table">
+      <div class="table-wrapper">
+        <table class="students-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Added By</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let student of selectedCourse?.students">
+              <td>{{ student._id?.name }}</td>
+              <td>{{ student._id?.email }}</td>
+              <td>{{ student?.isAddedBy?.name || 'N/A'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal display -->
+  <div class="modal-backdrop" *ngIf="showModal">
+    <div class="modal">
+     <div class="modal-header">
+      <h3>Select Students to Add / Remove</h3> 
+      <button class="close-button" (click)="closeModal()"> &times; </button>
+     </div>
+     <p>Below are the students that can be added in the course</p>
+
+        <div class="search-container">
+            <div class="search-wrapper">
+              <input
+                type="text"
+                id="search"
+                class="search-bar"
+                placeholder="Search students..."
+                [(ngModel)]="searchTerm" 
+                (keydown.enter)="onSearch()" 
+              />
+              <img src="assets/search-blue.svg" class="search-icon" alt="Search" (click)="onSearch()"/>
+            </div>
+          </div>
+     <div class="table-container">
+      <table class="trainee-table">
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Student Name</th>
             <th>Email</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let student of selectedCourse?.students">
-            <td>{{ student?.name }}</td>
-            <td>{{ student?.email }}</td>
+          <tr *ngFor="let user of filteredUsers">
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <button 
+              (click)="toggleUserInCourse(user)" 
+              [ngClass]="{
+                'add-btn': !isUserEnrolled(user._id),
+                'remove-btn': isUserEnrolled(user._id)
+              }"
+            >
+              {{ isUserEnrolled(user._id) ? '-' : '+' }}
+            </button>
+          </td>
           </tr>
         </tbody>
       </table>
+     </div>
     </div>
   </div>
   

@@ -108,6 +108,8 @@ body {
   margin-left: 250px;
   width: calc(100% - 250px);
   transition: margin-left 0.3s;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 
 .sidebar.collapsed + .main-content {

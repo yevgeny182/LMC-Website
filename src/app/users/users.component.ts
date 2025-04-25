@@ -4,10 +4,12 @@ import { InviteUserModalComponent } from '../invite-user-modal/invite-user-modal
 import { UpdateUserModalComponent } from '../update-user-modal/update-user-modal.component';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-users',
-  imports: [RouterModule, InviteUserModalComponent, CommonModule,  UpdateUserModalComponent ],
+  standalone: true,
+  imports: [RouterModule, InviteUserModalComponent, CommonModule,  UpdateUserModalComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
@@ -19,11 +21,12 @@ export class UsersComponent {
   isOpenDeleteModal: boolean = false;
   isOpenViewModal: boolean = false;
   isOpenInviteModal: boolean = false;
-  isOpenUpdateModal: boolean = false;
   isOpenEditModal: boolean = false;
+  currentPage: number = 1
+  itemsPerPage: number = 8
 
 
-  constructor(private router: Router, private snackBar: MatSnackBar) {}
+  constructor(private router: Router, private snackBar: MatSnackBar, private http: HttpClient) {}
 
   ngOnInit() {
     this.loadUsers();
@@ -40,20 +43,16 @@ export class UsersComponent {
 
 
   loadUsers() {
-    fetch('http://localhost:5048/users')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network error');
-        }
-        return response.json();
-      })
-      .then(data => {
+    this.http.get<any[]>('http://localhost:5048/users').subscribe(
+      (data) => {
         this.users = data;
-      })
-      .catch(err => {
+      },
+      (err) => {
         console.error('Error fetching data', err);
-      });
+      }
+    );
   }
+  
 
   //deleting trash icon
   openConfirmDeleteModal(user: any) {
@@ -77,7 +76,7 @@ export class UsersComponent {
 
   //updating
   openUpdateModal(user: any) {
-    console.log('Editing user:', user);
+
     this.userToEdit = user;
     this.isOpenEditModal = true; 
     console.log(this.isOpenEditModal)
@@ -122,5 +121,24 @@ export class UsersComponent {
       });
     });
 }
+
+  get paginatedUsers() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.users.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  get totalPages(){
+    return Math.ceil(this.users.length / this.itemsPerPage)
+  }
+
+  get totalArrayPages(){
+    return Array(this.totalPages).fill(0).map((_, i) => i + 1)
+  }
+  goToPage(page: number){
+    if(page >= 1 && page <= this.totalPages){
+      this.currentPage = page
+    }
+  }
+
 
 }
