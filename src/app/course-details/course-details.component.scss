@@ -87,6 +87,13 @@
   text-align: left;
   word-break: break-word;
 }
+.students-table tbody tr:nth-child(odd) {
+  background-color: #FFFFFF; 
+}
+
+.students-table tbody tr:nth-child(even) {
+  background-color: #FFF8C5; 
+}
 
 .modal {
   background: #fff;

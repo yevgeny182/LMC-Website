@@ -1,8 +1,20 @@
 <section class="content">
  <div class="users-header">
-  <h1>Courses</h1>
+  <h1>Learning course</h1>
 
-  <button class="invite-btn" (click)="openAddCourseModal()">Add Course</button>
+  <div class="button-container">
+    <button class="invite-btn" (click)="openAddCourseModal()">Add Course</button>
+  
+    <!-- Dropdown menu for selecting semester -->
+    <select class="semester-dropdown" [(ngModel)]="selectedSemester" [disabled]="defaultSem" (change)="onSemesterChange($event)">
+      <option value="" disabled> Select Semester...</option>
+      <option *ngFor="let sem of semesters" [value]="sem._id"
+      >
+    {{ sem.schoolYear }} ({{ sem.startDate | date:'MMM dd, yyyy' }} to {{ sem.endDate | date:'MMM dd, yyyy' }})
+      </option>
+    </select>
+  </div>
+  
 
       <!-- Add Course Modal -->
     <div class="modal" [ngClass]="{ 'show': viewCourseFormOpen }" *ngIf="viewCourseFormOpen">
@@ -42,7 +54,7 @@
   <!-- Display List of Courses -->
   <div class="table-wrapper">
   <!--   <hr /> -->
-    <p>Add courses for other students to join</p>
+    <p>List of courses for other students to join</p>
     <table *ngIf="courses.length > 0" class="users-table">
       <thead>
         <tr>
@@ -57,7 +69,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let course of courses">
+        <tr *ngFor="let course of filteredCourses">
           <td>{{ course.courseCode }}</td>
           <td>{{ course.courseTitle }}</td>
           <td> {{ course?.students?.length }} / {{ course.population }}</td>

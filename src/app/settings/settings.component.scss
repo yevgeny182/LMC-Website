@@ -1,0 +1,345 @@
+.settings-page {
+    max-width: 90%;
+    padding: 2.5rem;
+    background: #fff;
+    border-radius: 1rem;
+    width: 100%;    
+  }
+
+  .settings-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .settings-header p {
+    color: #666;
+  }
+  .settings-section {
+    margin-bottom: 2.5rem;
+    max-width: 90%;
+    margin: auto;
+    width: 100%;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+  }
+  .settings-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .date-range {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .date-range input {
+    flex: 1;
+  }
+  
+  input[type="text"],
+  input[type="date"],
+  select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  select:disabled {
+    background-color: #f5f5f5;
+  }
+  
+  .hint {
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 0.25rem;
+    display: block;
+  }
+  
+  .settings-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  .btn-primary {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .btn-primary:hover {
+    background-color: #348b34;
+  }
+  .btn-secondary:hover {
+    background-color: #d1d5db;
+  }
+  .hidden {
+    display: none;
+  }
+  
+ 
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 28px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #4CAF50;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(22px);
+  }
+  
+  .toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .toggle-label {
+    font-size: 16px;
+  }
+
+  .settings-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  .view-semesters-link {
+    font-size: 0.95rem;
+    color: #5086C6;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 500;
+    margin-left: auto;
+  }
+  
+  .view-semesters-link:hover {
+    color: #4338ca;
+  }
+
+  /* Backdrop */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Box */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.sem-hint {
+  font-size: 14px;
+  color: #888;
+  flex-basis: 100%; 
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: auto; 
+  line-height: 2;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+tr:hover {
+  background-color: #f5f5f5;
+}
+button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.action-icon {
+  width: 20px; 
+  height: 20px; 
+  cursor: pointer;
+  margin: 0 5px; 
+  transition: transform 0.2s; 
+}
+.action-icon:hover {
+  transform: scale(1.1); 
+}
+.default-semester {
+  background-color: #d4edda; 
+  color: #155724; 
+}
+.modal-body input[type="text"],
+.modal-body input[type="date"],
+.modal-body input[type="number"],
+.modal-body select {
+  font-size: 14px; 
+  padding: 8px 12px; 
+  width: 100%; 
+  box-sizing: border-box;
+}
+.modal-body input[type="checkbox"] {
+  transform: scale(1.2); 
+  transition: all 0.2s ease;
+}
+.modal-body .form-group label{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.modal-body p{
+  font-size: 1.0rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.delete-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px; 
+}
+.btn-confirm {
+  background-color: #e74c3c; 
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-confirm:hover {
+  background-color: #c0392b;
+}
+.btn-cancel {
+  background-color: #95a5a6; 
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-cancel:hover {
+  background-color: #7f8c8d;
+}
+
+.save-btn {
+  background-color: #28a745; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.save-btn:hover {
+  background-color: #218838; 
+}
+
+.delete-btn {
+  background-color: #dc3545; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: #c82333; 
+}
+.disabled-input{
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+  color: #888;
+}
+.disabled-input:focus{
+  outline: none;
+}

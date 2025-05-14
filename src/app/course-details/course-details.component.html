@@ -7,16 +7,15 @@
         <button class="add-students-button" (click)="openModal()">Assign Teacher</button>
       </div>
 
-      <p><strong>Teacher:</strong> <!-- {{ selectedCourse?.courseStatus }} --> Lebron James </p>
+      <p><strong>Teacher:</strong> <!-- {{ selectedCourse?.courseStatus }} --> Lebron James </p> 
       <p><strong>Course Code:</strong> {{ selectedCourse?.courseCode }}</p>
       <p><strong>Course Title:</strong> {{ selectedCourse?.courseTitle }}</p>
       <p><strong>Population:</strong> {{ selectedCourse?.students?.length }} / {{ selectedCourse?.population }}</p>
       <p><strong>Course Units:</strong> {{ selectedCourse?.courseUnits }}</p>
       <p><strong>Course Status:</strong> {{ selectedCourse?.courseStatus }}</p>
+      <p><strong>Semester:</strong> {{ selectedCourse?.semester?.schoolYear }}, {{selectedCourse?.semester?.startDate | date:'MMM dd, yyyy'}}</p>
     </div>
 
-    
-  
     <div class="students-section">
       <div class="students-header">
         <h3>👨‍🎓 Students Enrolled</h3>
@@ -36,7 +35,7 @@
             <tr *ngFor="let student of selectedCourse?.students">
               <td>{{ student._id?.name }}</td>
               <td>{{ student._id?.email }}</td>
-              <td>{{ student?.isAddedBy?.name || 'N/A'}}</td>
+              <td>{{ student?.isAddedBy?.name}} </td>
             </tr>
           </tbody>
         </table>

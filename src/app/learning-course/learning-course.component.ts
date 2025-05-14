@@ -22,25 +22,31 @@ export class LearningCourseComponent {
     courseUnits: number | null;
     courseStatus: string;
     students: any[];
+    semester: string
   } = {
     courseCode: '',
     courseTitle: '',
     population: null,
     courseUnits: null,
     courseStatus: '',
-    students: []
+    students: [],
+    semester: ''
   };
 
   courses: any[] = [];
+  semesters: any[] = [];
+  selectedSemester: string =''
 
   viewCourseDetailsOpen: boolean = false;
   viewCourseFormOpen: boolean = false;
   selectedCourse: any = null;
   viewUpdateCourseModalOpen: boolean = false;
   viewDeleteCourseModalOpen: boolean = false;
+  defaultSem: boolean = false;
 
   ngOnInit(): void {
     this.fetchCourse();
+    this.fetchSemesters()
   }
 
   fetchCourse() {
@@ -52,9 +58,6 @@ export class LearningCourseComponent {
             if(course.population === course.students.length){
               this.http.put(`http://localhost:5048/courses/updateCourse/${course._id}`, { courseStatus: 'Closed' })
               .subscribe({ 
-                next: () =>{
-                    console.log('Course status updated')
-                },
                 error: (err) =>{
                   console.log('Error', err)
                 }
@@ -63,9 +66,6 @@ export class LearningCourseComponent {
               if(course.courseStatus !== 'Closed'){
               this.http.put(`http://localhost:5048/courses/updateCourse/${course._id}`, { courseStatus: 'Open' })
               .subscribe({ 
-                next: () =>{
-                    console.log('Course status Open')
-                },
                 error: (err) =>{
                   console.log('Error', err)
                 }
@@ -82,12 +82,14 @@ export class LearningCourseComponent {
 
   addCourse() {
     this.course.courseUnits = parseFloat(this.course.courseUnits as any)
+    this.course.semester = this.selectedSemester
     if (
       !this.course.courseCode ||
       !this.course.courseTitle ||
       this.course.population === null ||
       isNaN(this.course.courseUnits) ||
-      !this.course.courseStatus
+      !this.course.courseStatus ||
+      !this.course.semester
     ) {
       this.snackBar.open('Please fill in all fields correctly', 'Close', {
         duration: 4000,
@@ -112,7 +114,8 @@ export class LearningCourseComponent {
             population: null,
             courseUnits: null,
             courseStatus: '',
-            students: []
+            students: [],
+            semester: ''
           }; 
         },
         error: (err) => {
@@ -137,10 +140,8 @@ export class LearningCourseComponent {
         panelClass: ['snack-error'],
       });
       return;
-    }
-    /* if(updatedCourse.population === this.course?.students?.length) */
-      
-    this.http.put(`http://localhost:5048/courses/updateCourse/${course._id}`, updatedCourse)
+    } 
+    this.http.put<any[]>(`http://localhost:5048/courses/updateCourse/${course._id}`, updatedCourse)
     .subscribe({
       next: () => {
         this.fetchCourse()
@@ -177,7 +178,43 @@ export class LearningCourseComponent {
       }
     });
   }
-
+  fetchSemesters(){
+    this.http.get(`http://localhost:5048/settings/getSemester`).subscribe({
+      next: (data: any) =>{
+        this.semesters = data;
+        const defaultSem = this.semesters.find(sem => sem.isDefault)
+        if(defaultSem){
+          this.selectedSemester = defaultSem._id
+          this.course.semester = defaultSem._id
+          this.defaultSem = true
+        }else{
+          this.selectedSemester = ''
+          this.course.semester = ''
+          this.defaultSem = false
+        }
+      },
+      error: (err) =>{
+        console.log('Error: ', err)
+      }
+    })
+  }
+  get isDefaultSem() : boolean{
+    return this.semesters.some(sem => 
+      sem.isDefault
+    )
+  }
+  get filteredCourses(){
+    if(!this.isDefaultSem || !this.selectedSemester){
+      return this.courses
+    }
+    return this.courses.filter(course =>
+      course.semester === this.selectedSemester
+    )
+  }
+  onSemesterChange(event: Event): void{
+    const selectElement = event.target as HTMLSelectElement
+    this.selectedSemester = selectElement.value
+  }
   closeModal() {
     this.viewCourseDetailsOpen = false;
     this.selectedCourse = null;

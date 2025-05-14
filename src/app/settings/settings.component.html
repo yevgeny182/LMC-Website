@@ -1,0 +1,204 @@
+<section class="settings-page">
+    <header class="settings-header">
+        <h1>Settings</h1>
+        <p>Manage curriculum and school-wide configurations here.</p>
+    </header>
+
+    <!-- Academic Settings Section  -->
+    
+    <div class="settings-section">
+        <div class="settings-section-header">
+            <h2>Academic Settings</h2>
+            <p class="view-semesters-link" (click)="openSemesterModal()">View Created Semesters</p>
+          </div>
+          <div class="form-group">
+            <label for="semester">Semester Duration</label>
+            <div class="date-range">
+                <input type="date" id="startDate" name="startDate" placeholder="Start Date"
+                    [(ngModel)]="startDate"
+                    [disabled]="editSemester?.isDefault"
+                    [ngClass]="{'disabled-input': editSemester?.isDefault}"
+                    title="Please unselect the default semester in View Created Semesters"/>
+                <span>to</span>
+                <input type="date" id="endDate" name="endDate" placeholder="End Date"
+                    [(ngModel)]="endDate"
+                    [disabled]="editSemester?.isDefault"
+                    [ngClass]="{'disabled-input': editSemester?.isDefault}"
+                    title="Please unselect the default semester in View Created Semesters"/>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="schoolYear">School Year</label>
+            <input type="text" id="schoolYear" name="schoolYear" placeholder="e.g., 1st Semester 2025-2026"
+                [(ngModel)]="schoolYear"
+                [disabled]="editSemester?.isDefault"
+                [ngClass]="{'disabled-input': editSemester?.isDefault}"
+                title="Please unselect the default semester in View Created Semesters"/>
+        </div>
+        
+    </div>
+
+    <!-- Grading Settings Section -->
+    <div class="settings-section">
+        <h2>Grading Settings</h2>
+        <div class="form-group">
+            <label for="gradingSystem">Grading System</label>
+            <select id="gradingSystem" name="gradingSystem" [(ngModel)]="gradingSystem" disabled>
+                <option value="percentage">Percentage-Based</option>
+                <option value="gpa" selected>GPA-Based</option>
+                <option value="letter">Letter Grade</option>
+            </select>
+            <small class="hint">This option will be available in the future</small>
+        </div>
+    </div>
+    
+    <!-- Enrollment Settings Section -->
+    <div class="settings-section">
+        <h2>Enrollment Settings</h2>
+        <div class="form-group toggle-setting">
+            <div class="toggle-row">
+                <label for="selfEnrollmentToggle" class="toggle-label">Allow Student Self-Enrollment</label>
+                <label class="switch">
+                    <input type="checkbox" id="selfEnrollmentToggle">
+                    <span class="slider round"></span>
+                </label>
+                
+            </div>
+            <small class="hint">Let students assign subjects and enroll on their own</small>
+        </div>
+    </div>
+    
+        <div class="settings-section">
+            <div class="form-group toggle-setting">
+                <div class="toggle-row">
+                    <label for="autoAssignCoursesToggle" class="toggle-label">Send account notification to student</label>
+                    <label class="switch">
+                        <input type="checkbox" id="autoAssignCoursesToggle" >
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <small class="hint">Send student notification for grades and enrolled courses</small>
+            </div>
+        </div>
+        <div class="settings-section">
+            <div class="form-group toggle-setting">
+                <div class="toggle-row">
+                    <label for="autoAssignCoursesToggle" class="toggle-label">Create Blocksectioning (Coming Soon)</label>
+                    <label class="switch">
+                        <input type="checkbox" id="autoAssignCoursesToggle" disabled>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <small class="hint">This feature will be available soon.</small>
+            </div>
+        </div>
+        <div class="settings-section">
+            <div class="form-group toggle-setting">
+                <div class="toggle-row">
+                    <label for="autoAssignCoursesToggle" class="toggle-label">Allow Cross-Enrollment (Coming Soon)</label>
+                    <label class="switch">
+                        <input type="checkbox" id="autoAssignCoursesToggle" disabled>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <small class="hint">This feature will be available soon.</small>
+            </div>    
+        </div>
+    
+    
+
+    <!-- Action Buttons -->
+    <div class="settings-actions">
+        <button class="btn-primary" (click)="saveSettings()">Save Changes</button>
+    </div>
+
+    <!-- Modal Open Sems -->
+    <div class="modal-backdrop" *ngIf="isSemesterModalOpen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Created Semesters</h3>
+        
+        <button class="close-btn" (click)="closeSemesterModal()">&times;</button>
+        <small class="sem-hint">Below are the created semesters by admins</small>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Your Existing Table -->
+        <table>
+          <thead>
+            <tr>
+              <th>Semester</th>
+              <th>Duration (From and To)</th>
+              <th>Added By</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let semester of semesters" (click)="selectedSemester = semester" [ngClass]="{'default-semester': semester.isDefault}">           
+                <td>{{ semester.schoolYear }}</td>
+                <td>{{ semester.startDate | date }} - {{ semester.endDate | date }}</td>
+                <td>{{ semester.isAddedBy?.name }}</td>
+               
+                <td>
+                  <img src="assets/edit.svg" class="action-icon" title="Edit" (click)="editSem(semester._id); $event.stopPropagation()">
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Sem Modal -->
+
+  <div class="modal-backdrop" *ngIf="isEditSemesterModalOpen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Edit Semester</h3>
+        <button class="close-btn" (click)="closeEditModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label for="editSchoolYear">School Year</label>
+            <input type="text" id="editSchoolYear" [(ngModel)]="editSemester.schoolYear">
+          </div>
+          <div class="form-group">
+            <label for="editStartDate">Start Date</label>
+            <input type="date" id="editStartDate" [(ngModel)]="editSemester.startDate">
+          </div>
+          <div class="form-group">
+            <label for="editEndDate">End Date</label>
+            <input type="date" id="editEndDate" [(ngModel)]="editSemester.endDate">
+          </div>
+          <div class="form-group">
+            <label for="setDefaultSemester">
+            <input type="checkbox" id="setDefaultSemester" [(ngModel)]="editSemester.isDefault">
+            Set as Default Sem?
+            </label>
+          </div>
+          <button class="save-btn"(click)="saveUpdatedSem(); $event.stopPropagation()">Save Changes</button>
+          <button class="delete-btn" (click)="openDeleteSemester(editSemester._id); $event.stopPropagation()">Delete Semester?</button>
+      </div>
+    </div>
+  </div>
+
+   <!-- Delete Sem Modal -->
+
+   <div class="modal-backdrop" *ngIf="isDeleteSemesterModalOpen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Delete Semester</h3>
+        <button class="close-btn" (click)="closeDeleteModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this semester? This action cannot be undone.</p>
+        <div class="delete-actions">
+            <button class="btn-confirm"(click)="confirmDelete()"> Yes </button>
+            <button class="btn-cancel" (click)="closeDeleteModal()"> No </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

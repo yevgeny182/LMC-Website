@@ -47,6 +47,7 @@ export class CourseDetailsComponent {
       this.http.get<any>(`http://localhost:5048/courses/getCourse/${id}`).subscribe({
         next: (data) => {
           this.selectedCourse = data;
+          console.log(this.selectedCourse.semester?.schoolYear)
         },
         error: (err) =>{
           console.error('Error: ', err);
@@ -130,6 +131,8 @@ export class CourseDetailsComponent {
       let snackBarClass = type === 'success' ? 'snack-success' : 'snack-error'
       this.snackBar.open(message, 'Close', {
         duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition:'top',
         panelClass: [snackBarClass]
       })
     }

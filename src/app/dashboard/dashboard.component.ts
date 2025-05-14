@@ -12,14 +12,7 @@ export class DashboardComponent {
   constructor(private router: Router){}
 
 
-   toggleSidebar() {
-    document.getElementById('sidebar')?.classList.toggle('collapsed');
-    document.getElementById('mainContent')?.classList.toggle('collapsed');
-  }
 
-  logout(){
-    this.router.navigate(['/'])
-    localStorage.removeItem('auth_token');
-  }
+
  
 }

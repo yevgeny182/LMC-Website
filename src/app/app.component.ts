@@ -53,20 +53,68 @@ export class AppComponent {
       })
       .then(user => {
         if(user.user.status === false){
-          this.openToast('Login failed: Your account is inactive.');
+          this.snackBar.open('Login failed: Your account is inactive.', 'Close', {
+          duration: 4000,
+          panelClass: ['snack-error'],
+          });
           this.password = '' // Show a message if the status is false
           return;
         }else{
-          console.log('[AppComponent] Logged in user:', user);
+          /* console.log('[AppComponent] Logged in user:', user); */
           this.user = user;
           sessionStorage.setItem('user', JSON.stringify(user));
-          this.router.navigate(['/dashboard']);
+           if(user.user.role === 'Admin'){
+              this.snackBar.open(`Welcome admin!  [${user.user.name}]`, 'Close', {
+              duration: 4000,
+              panelClass: ['snack-success'],
+            });
+            this.router.navigate(['/dashboard']);
+           }else{
+            this.snackBar.open(`Welcome student!  [${user.user.name}]`, 'Close', {
+              duration: 4000,
+              panelClass: ['snack-success'],
+            });
+            this.router.navigate(['/dashboard']);
+           }
+            
+          
         }
         
       })
       .catch(err => {
-        console.error('Login failed:', err);
-        this.openToast('Login Failed: Username and password are incorrect.');
+          if (!this.email && !this.password) {
+          this.snackBar.open('Email and password fields must be filled!', 'Close', {
+            duration: 4000,
+            panelClass: ['snack-error'],
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
+          });
+        } 
+        else if (!this.email) {
+          this.snackBar.open('Email field must be filled!', 'Close', {
+            duration: 4000,
+            panelClass: ['snack-error'],
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
+          });
+        } 
+        else if (!this.password) {
+          this.snackBar.open('Password field must be filled!', 'Close', {
+            duration: 4000,
+            panelClass: ['snack-error'],
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
+          });
+        } 
+        else {
+          console.error('Login failed:', err);
+          this.snackBar.open('Login failed: Enter your correct username and password!', 'Close', {
+            duration: 4000,
+            panelClass: ['snack-error'],
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
+          });
+        }
         this.password = '';
       });
   }
@@ -74,13 +122,5 @@ export class AppComponent {
   onLogout() {
     this.user = null;
     this.router.navigate(['/login']);
-  }
-
-  openToast(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 3000,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'right'
-    });
   }
 }
