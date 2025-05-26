@@ -5,11 +5,12 @@ import { UpdateUserModalComponent } from '../update-user-modal/update-user-modal
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [RouterModule, InviteUserModalComponent, CommonModule,  UpdateUserModalComponent],
+  imports: [RouterModule, InviteUserModalComponent, CommonModule,  UpdateUserModalComponent, FormsModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
@@ -24,6 +25,9 @@ export class UsersComponent {
   isOpenEditModal: boolean = false;
   currentPage: number = 1
   itemsPerPage: number = 8
+  searchUser: string = ''
+  filteredUsers: any[] = []
+  selectedFilter: string = 'name'
 
 
   constructor(private router: Router, private snackBar: MatSnackBar, private http: HttpClient) {}
@@ -46,6 +50,7 @@ export class UsersComponent {
     this.http.get<any[]>('http://localhost:5048/users').subscribe(
       (data) => {
         this.users = data;
+        this.filteredUsers = data
       },
       (err) => {
         console.error('Error fetching data', err);
@@ -65,7 +70,6 @@ export class UsersComponent {
     this.userToDelete = null; 
   }
 
-  //viewing eye icon
   openConfirmViewModal(user: any){
     this.userToView = user;
     this.isOpenViewModal = true;
@@ -74,7 +78,6 @@ export class UsersComponent {
     this.isOpenViewModal = false;
   }
 
-  //updating
   openUpdateModal(user: any) {
 
     this.userToEdit = user;
@@ -83,8 +86,8 @@ export class UsersComponent {
   }
 
   closeUpdateModal() {
-    this.isOpenEditModal = false; // Close the update modal
-    this.userToEdit = null; // Clear the user to edit
+    this.isOpenEditModal = false; 
+    this.userToEdit = null; 
   }
 
 
@@ -99,36 +102,49 @@ export class UsersComponent {
             throw new Error(`Failed to delete user. Status code: ${response.status}`);
         }
         
-        // Check if response returns any body
         return response.json().then(data => {
-            console.log('Response data:', data); // Log any response data
+            console.log('Response data:', data); 
         });
     })
     .then(() => {
         console.log('User deleted successfully');
-        this.loadUsers(); // Refresh the user list
-        this.closeConfirmDeleteModal(); // Close the confirmation modal
+        this.loadUsers(); 
+        this.closeConfirmDeleteModal(); 
         this.snackBar.open('User deleted successfully!', 'Close', {
-          duration: 3000, // Duration in milliseconds
-          panelClass: ['snack-success'], // Custom class for styling
+          duration: 3000, 
+          panelClass: ['snack-success'], 
       });
     })
     .catch(err => {
         console.error('Error deleting user:', err);
         this.snackBar.open('Failed to delete user. Please try again.', 'Close', {
           duration: 3000,
-          panelClass: ['snack-error'], // Optional: create a different class for error styling
+          panelClass: ['snack-error'], 
       });
     });
 }
 
   get paginatedUsers() {
+    const filtered = this.searchUser.trim()
+    ? this.users.filter(user => {
+        const value = user[this.selectedFilter]?.toLowerCase?.() || '';
+        return value.includes(this.searchUser.toLowerCase());
+      })
+    : this.users;
+
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.users.slice(startIndex, startIndex + this.itemsPerPage);
+    return filtered.slice(startIndex, startIndex + this.itemsPerPage)
   }
 
   get totalPages(){
-    return Math.ceil(this.users.length / this.itemsPerPage)
+    const filtered = this.searchUser.trim()
+    ? this.users.filter(user => {
+        const value = user[this.selectedFilter]?.toLowerCase?.() || '';
+        return value.includes(this.searchUser.toLowerCase());
+      })
+    : this.users;
+
+  return Math.ceil(filtered.length / this.itemsPerPage);
   }
 
   get totalArrayPages(){
@@ -139,6 +155,11 @@ export class UsersComponent {
       this.currentPage = page
     }
   }
+
+  onSearch() {
+    this.currentPage = 1
+  }
+
 
 
 }

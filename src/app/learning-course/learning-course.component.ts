@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // ✅ Needed for ngForm
 import { CommonModule } from '@angular/common'; 
+import { UserService } from '../../../user.service';
 
 @Component({
   selector: 'app-learning-course',
@@ -13,7 +14,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./learning-course.component.scss'] // typo fixed: styleUrl -> styleUrls
 })
 export class LearningCourseComponent {
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private userService: UserService) {}
 
   course: {
     courseCode: string;
@@ -43,11 +44,14 @@ export class LearningCourseComponent {
   viewUpdateCourseModalOpen: boolean = false;
   viewDeleteCourseModalOpen: boolean = false;
   defaultSem: boolean = false;
+  role: string | null = null;
 
   ngOnInit(): void {
     this.fetchCourse();
     this.fetchSemesters()
+    this.role = this.userService.getRole()
   }
+
 
   fetchCourse() {
     this.http.get<any[]>('http://localhost:5048/courses/getCourses')
@@ -199,9 +203,7 @@ export class LearningCourseComponent {
     })
   }
   get isDefaultSem() : boolean{
-    return this.semesters.some(sem => 
-      sem.isDefault
-    )
+    return this.semesters.some(sem => sem.isDefault)
   }
   get filteredCourses(){
     if(!this.isDefaultSem || !this.selectedSemester){
@@ -210,6 +212,9 @@ export class LearningCourseComponent {
     return this.courses.filter(course =>
       course.semester === this.selectedSemester
     )
+  }
+  isAdmin(): boolean{
+    return this.role === 'Admin'
   }
   onSemesterChange(event: Event): void{
     const selectElement = event.target as HTMLSelectElement

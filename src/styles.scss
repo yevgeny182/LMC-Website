@@ -24,6 +24,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: #5bd85f !important;
     color: white !important;
   }
+
+  .snack-default .mdc-snackbar__surface {
+  background-color: #ab47bc !important; /* soft purple */
+  color: white !important;
+}
+.snack-default .mdc-button__label{
+  color: white !important;
+}
   
   .snack-success .mdc-button__label {
     color: white !important;

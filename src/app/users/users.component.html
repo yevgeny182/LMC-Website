@@ -7,7 +7,7 @@
   
    <div class="search-filter-container">
       <div class="filter-wrapper">
-        <select id="filter" name="filter" class="filter-dropdown">
+        <select id="filter" name="filter" class="filter-dropdown" [(ngModel)]="selectedFilter">
           <option value="" disabled selected> Select Filter</option>
           <option value="name">Name</option>
           <option value="email">Email</option>
@@ -18,7 +18,9 @@
    <div class="search-filter-container">
     <div class="search-wrapper">
       <div class="search-container">
-        <input type="text" placeholder="Search users..." class="search-bar">
+        <input type="text" placeholder="Search users..." class="search-bar"
+        id="search" [(ngModel)]="searchUser" (keydown.enter)="onSearch()"
+        >
         <img src="assets/search-blue.svg" class="search-icon" alt="Search">
       </div>
       
@@ -88,13 +90,8 @@
       </button>
     </div>
   </div>
-  
-    
+
 </section>
-
-
-
-
 
 <!-- DELETE -->
 <div class="modal" *ngIf="isOpenDeleteModal" style="display: block;">

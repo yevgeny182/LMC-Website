@@ -4,10 +4,21 @@
     <div class="course-info-card">
       <div class="students-header">
         <h2>📘 Course Information</h2>
-        <button class="add-students-button" (click)="openModal()">Assign Teacher</button>
+        <button class="add-students-button" (click)="openModalTeachers()">Assign Teacher</button>
       </div>
+      <p>
+        <strong>Teacher(s):</strong>
+        <ng-container *ngIf="selectedCourse?.teacher?.length > 0; else noTeachers">
+          <span *ngFor="let teacher of selectedCourse.teacher; let last = last">
+            {{ teacher.name }}<span *ngIf="!last">, </span>
+          </span>
+        </ng-container>
+      </p>
 
-      <p><strong>Teacher:</strong> <!-- {{ selectedCourse?.courseStatus }} --> Lebron James </p> 
+      <ng-template #noTeachers>
+        <span style="color: red;"><em>No teacher assigned yet.</em></span>
+      </ng-template>
+    
       <p><strong>Course Code:</strong> {{ selectedCourse?.courseCode }}</p>
       <p><strong>Course Title:</strong> {{ selectedCourse?.courseTitle }}</p>
       <p><strong>Population:</strong> {{ selectedCourse?.students?.length }} / {{ selectedCourse?.population }}</p>
@@ -95,4 +106,58 @@
      </div>
     </div>
   </div>
-  
+
+<!-- Modal Teacher -->
+  <div class="modal-backdrop" *ngIf="showModalAdmins">
+    <div class="modal">
+     <div class="modal-header">
+      <h3>Assign teacher</h3> 
+      <button class="close-button" (click)="closeModal()"> &times; </button>
+     </div>
+     <p>Assign a teacher for them to handle the course.</p>
+
+        <div class="search-container">
+            <div class="search-wrapper">
+              <input
+                type="text"
+                id="search"
+                class="search-bar"
+                placeholder="Search teachers..."
+                [(ngModel)]="searchTerm" 
+                (keydown.enter)="onSearch()" 
+              />
+              <img src="assets/search-blue.svg" class="search-icon" alt="Search" (click)="onSearch()"/>
+            </div>
+          </div>
+     <div class="table-container">
+      <table class="trainee-table">
+        <thead>
+          <tr>
+            <th>Name of User</th>
+            <th>Email</th>
+            <th>Position</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsersAdmin">
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+              <button 
+              (click)="assignAdmin(user._id)" 
+              [ngClass]="{
+                'add-btn': !isTeacher(user._id),
+                'remove-btn': isTeacher(user._id)
+              }"
+            >
+              {{ isTeacher(user._id) ? '-' : '+' }}
+            </button>
+          </td>
+          </tr>
+        </tbody>
+      </table>
+     </div>
+    </div>
+  </div>

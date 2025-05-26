@@ -3,7 +3,6 @@
 
     <nav class="sidebar" id="sidebar" #sidebarRef>
       <img src="assets/LMCLogo.svg" alt="Logo" class="logo">
-  
       <div class="user-profile" *ngIf="user">
         <img src="assets/user-default.svg" alt="User Profile" class="user-icon">
         <div class="user-info">
@@ -39,7 +38,7 @@
             <span>Assessments</span>
           </a>
         </li>
-        <li>
+        <li *ngIf="role !== 'Trainee'">
           <a routerLink="/modules" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <img src="assets/book-white.svg" class="sidebar-icon">
             <span>Module Library</span>
@@ -51,7 +50,7 @@
             <span>Teams</span>
           </a>
         </li>
-        <li>
+        <li *ngIf="role !== 'Trainee'">
           <a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <img src="assets/users-white.svg" class="sidebar-icon">
             <span>Users</span>
@@ -69,7 +68,7 @@
             <span>Profile</span>
           </a>
         </li>
-        <li>
+        <li *ngIf="role !== 'Trainee'">
           <a routerLink="/announcements" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <img src="assets/megaphone-white.svg" class="sidebar-icon">
             <span>Announcements</span>
@@ -86,11 +85,55 @@
   
     <div class="main-content" id="mainContent" #mainContentRef>
       <header class="topbar">
-        <img src="assets/notification-bell-white.svg" class="sidebar-icon" style="cursor: pointer;" title="Notification"> 
-        <img src="assets/logout-white.svg" class="sidebar-icon" (click)="onLogout()" style="cursor: pointer;" title="Logout?"> 
+  
+      <div class="notification-bell-wrapper" #notificationBellWrapper (click)="toggleNotifications()">
+          <img src="assets/notification-bell-white.svg" class="sidebar-icon" style="cursor: pointer;" title="Notification">
+            <span class="notification-badge" *ngIf="notifications.length > 0">
+              {{ notifications.length }}
+            </span>
+              </div>
+          <img src="assets/logout-white.svg" class="sidebar-icon" (click)="onLogout()" style="cursor: pointer;" title="Logout?"> 
+        <div class="notification-popup" *ngIf="showNotifications" #notificationPopup>
+      <div class="notif-header">
+        <p class="notif-title">Notifications:</p>
+        <p class="view-read" (click)="viewReadNotifications()" style="cursor: pointer;">
+          {{ showReadNotification ? 'View Unread Notifications' : 'View Read Notifications' }}
+        </p>
+      </div>
+
+  <hr style="margin: 6px 0; border: 0; border-top: 1px solid #ccc;" />
+  <!-- UNREAD notifications -->
+      <ng-container *ngIf="!showReadNotification">
+        <div *ngFor="let notif of notifications" style="margin-bottom: 10px;" title="Mark as read">
+          <div (click)="markAsRead(notif._id)" style="cursor: pointer;">{{ notif.message }}</div>
+          <div class="bottom-date">
+            <small style="color: gray;">{{ notif.createdAt | date:'MM/dd/yyyy, h:mm a' }}</small>
+          </div>
+          
+          <hr style="margin: 6px 0; border: 0; border-top: 1px solid #ccc;" />
+        </div>
+        <div class="bottom-title" *ngIf="notifications.length > 0">Click the notification to mark as read.</div>
+        
+      </ng-container>
+
+  <!-- READ notifications -->
+      <ng-container *ngIf="showReadNotification">
+        <div *ngFor="let notif of readNotification" style="margin-bottom: 10px;">
+          <div>{{ notif.message }}</div>
+          <div class="bottom-date">
+            <small style="color: gray;">{{ notif.createdAt | date:'MM/dd/yyyy, h:mm a' }}</small>
+          </div>
+          <hr style="margin: 6px 0; border: 0; border-top: 1px solid #ccc;" />
+        </div>
+        <div class="bottom-title" *ngIf="readNotification.length === 0">No read notifications found.</div>
+      </ng-container>
+    </div>
+
       </header>
       <router-outlet></router-outlet>
     </div>
+
+    
   
   </div>
   

@@ -2,7 +2,7 @@
  <div class="users-header">
   <h1>Learning course</h1>
 
-  <div class="button-container">
+  <div class="button-container" *ngIf="isAdmin()">
     <button class="invite-btn" (click)="openAddCourseModal()">Add Course</button>
   
     <!-- Dropdown menu for selecting semester -->
@@ -64,8 +64,8 @@
           <th>Units</th>
           <th>Status</th>
           <th>View</th>
-          <th>Update</th>
-          <th>Delete</th>
+          <th *ngIf="isAdmin()">Update</th>
+          <th *ngIf="isAdmin()">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -80,10 +80,10 @@
               <img src="assets/view.svg" class="action-icon" style="width: 25px; height:25px;">
             </a>
           </td>
-          <td>
+          <td *ngIf="isAdmin()">
             <img src="assets/edit.svg" class="action-icon" title="Edit" (click)="updateModal(course)">
           </td>        
-          <td>
+          <td *ngIf="isAdmin()">
             <img src="assets/trash.svg" class="action-icon" title="Delete" (click)="deleteModal(course)">
           </td>
         </tr>

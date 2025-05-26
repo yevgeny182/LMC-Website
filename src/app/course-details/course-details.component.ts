@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../user.service';
+/* import { NotificationService } from '../services/notification.service'; */
 
 interface User{
   _id: string,
@@ -25,8 +26,12 @@ export class CourseDetailsComponent {
     selectedCourse: any = null;
     users: User[] = []
     showModal: boolean = false;
+    showModalAdmins: boolean = false
     searchTerm: string = ''
     filteredUsers: any[] = []
+    filteredUsersAdmin: any[] = []
+    selectedAdminId: string | null = null;
+    teacher: any = null;
 
     constructor(private route: ActivatedRoute, 
       private http: HttpClient, 
@@ -47,7 +52,9 @@ export class CourseDetailsComponent {
       this.http.get<any>(`http://localhost:5048/courses/getCourse/${id}`).subscribe({
         next: (data) => {
           this.selectedCourse = data;
-          console.log(this.selectedCourse.semester?.schoolYear)
+       /*    for(let i = 0; i < this.selectedCourse.teacher.length; i++){  
+          console.log(this.selectedCourse.teacher[i]?.name)
+          } */
         },
         error: (err) =>{
           console.error('Error: ', err);
@@ -59,6 +66,10 @@ export class CourseDetailsComponent {
         next: (data) => {
           this.users = data.filter((user: any) => user?.role === 'Trainee');
           this.filteredUsers = this.users
+          if(this.showModalAdmins){
+            this.users = data.filter((user: any) => user?.role === 'Admin')
+            this.filteredUsersAdmin = this.users
+          }
         },
         error: (err) =>{
           console.error('Error: ', err);
@@ -78,7 +89,7 @@ export class CourseDetailsComponent {
           isTrue === true ?  this.showToast('Course is full, adjust the course population!', 'error') : this.showToast('Cannot add students in course,\n\n course status is closed!', 'error')
             return;
         }else{
-          console.log('Attempting to add user to course UserId:', userId);
+          /* console.log('Attempting to add user to course UserId:', userId); */
           this.http.post(`http://localhost:5048/courses/${this.courseId}/addUser`, payload).subscribe({
             next: (data) => {
               this.showToast('User added successfully!', 'success');
@@ -102,7 +113,7 @@ export class CourseDetailsComponent {
      this.http.delete(`http://localhost:5048/courses/${courseId}/removeUser`, { body: payload }).subscribe({
       next: (data) =>{
         console.log(data)
-        this.showToast(`User has been removed`, 'error');
+        this.showToast(`User has been removed`, 'success');
           this.fetchCourseById(this.courseId!);
       },
       error: (err) =>{
@@ -115,22 +126,61 @@ export class CourseDetailsComponent {
     onSearch(){
       if(this.searchTerm.trim() !== ''){
         this.filteredUsers = this.users.filter(user => user.name.toLowerCase().includes(this.searchTerm.toLowerCase()))
+        if(this.showModalAdmins)
+          this.filteredUsersAdmin = this.users.filter(user => user.name.toLowerCase().includes(this.searchTerm.toLowerCase()))
       }else{
         this.filteredUsers = this.users
+        if(this.showModalAdmins){
+          this.filteredUsersAdmin = this.users
+        }
       }
+    }
+    assignAdmin(userId: string){
+     const isTeacher = this.selectedCourse?.teacher?.some((teacher: any) => (teacher._id?._id || teacher?._id) === userId )  
+     const apiEndpoint = isTeacher ? 
+     `http://localhost:5048/courses/${this.courseId}/removeTeacher` : 
+     `http://localhost:5048/courses/${this.courseId}/assignTeacher`
+     this.http.put(apiEndpoint, {teacherId: userId}).subscribe({
+      next: () =>{
+        const message = isTeacher ? 'Teacher is now unassigned' : '🎶 She drives me crazy Like no one else, She drives me crazy And I cant help myself🎶' /* Teacher assigned successfully! */ 
+        this.showToast(message, 'default')
+        this.selectedAdminId = isTeacher ? null : userId
+        this.fetchCourseById(this.courseId!)
+        /* this.closeModal() */
+      },
+      error: (err) => {
+        this.showToast('Error adding a teacher', 'error')
+        console.error('Error in endpoint', err)
+      }
+     })
+    }
+    // Checks if the given userId belongs to a teacher assigned to the current course.
+    // Since teacher entries might be populated (teacher._id is an object) or just raw IDs (teacher._id is a string),
+    // we safely check both cases by trying teacher._id._id first, then fallback to teacher._id.
+    // Returns true if the userId matches any teacher in the course, otherwise false.
+    isTeacher(userId: string): boolean{
+      return this.selectedCourse?.teacher?.some((teacher: any) => (teacher._id._id || teacher._id) === userId) ?? false
     }
        
     openModal(){
       this.fetchUsers()
       this.showModal = true;
     }
+    openModalTeachers(){
+      this.showModalAdmins = true;
+      this.fetchUsers()
+    }
     closeModal(){
       this.showModal = false
+      if(this.showModalAdmins)
+        this.showModalAdmins = false
     }
-    showToast(message: string, type: 'success' | 'error'){
-      let snackBarClass = type === 'success' ? 'snack-success' : 'snack-error'
+    showToast(message: string, type: 'success' | 'error' | 'default'){
+      let snackBarClass
+      snackBarClass = type === 'success' ? 'snack-success' : 
+      snackBarClass = type === 'default' ? 'snack-default' : 'snack-error'
       this.snackBar.open(message, 'Close', {
-        duration: 5000,
+        duration: 20000,
         horizontalPosition: 'center',
         verticalPosition:'top',
         panelClass: [snackBarClass]
@@ -146,6 +196,7 @@ export class CourseDetailsComponent {
         this.addUserstoCourse(user._id);
       }
     }
+    
     goBack(){
       this.router.navigate(['/learning-course'])
     }
