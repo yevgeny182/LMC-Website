@@ -32,6 +32,7 @@ export class CourseDetailsComponent {
     filteredUsersAdmin: any[] = []
     selectedAdminId: string | null = null;
     teacher: any = null;
+    role: string | null = null
 
     constructor(private route: ActivatedRoute, 
       private http: HttpClient, 
@@ -46,13 +47,14 @@ export class CourseDetailsComponent {
           this.fetchCourseById(id)
         this.courseId = id
       })
+      this.role = this.userService.getRole()
     }
 
     fetchCourseById(id: string){
       this.http.get<any>(`http://localhost:5048/courses/getCourse/${id}`).subscribe({
         next: (data) => {
           this.selectedCourse = data;
-       /*    for(let i = 0; i < this.selectedCourse.teacher.length; i++){  
+       /* for(let i = 0; i < this.selectedCourse.teacher.length; i++){  
           console.log(this.selectedCourse.teacher[i]?.name)
           } */
         },
@@ -61,14 +63,25 @@ export class CourseDetailsComponent {
         }
       });
     }
+    get displayedUsers(): User[]{
+      if(this.isAdmin()){
+        return this.filteredUsers; //show all students as ADMIN
+      }else if(this.isStudent()){
+        //students will see their own names and can enroll themselves
+        return this.filteredUsers.filter(user => user._id === this.userService.getCurrentUser()._id); 
+      }
+      return [] //return empty array if role is undefined
+    }
     fetchUsers(){
       this.http.get<any>(`http://localhost:5048/users`).subscribe({
         next: (data) => {
           this.users = data.filter((user: any) => user?.role === 'Trainee');
           this.filteredUsers = this.users
+          this.filteredUsersAdmin = [...this.users]
           if(this.showModalAdmins){
             this.users = data.filter((user: any) => user?.role === 'Admin')
             this.filteredUsersAdmin = this.users
+            this.filteredUsers = [...this.users]
           }
         },
         error: (err) =>{
@@ -124,14 +137,18 @@ export class CourseDetailsComponent {
       
     }
     onSearch(){
-      if(this.searchTerm.trim() !== ''){
-        this.filteredUsers = this.users.filter(user => user.name.toLowerCase().includes(this.searchTerm.toLowerCase()))
-        if(this.showModalAdmins)
-          this.filteredUsersAdmin = this.users.filter(user => user.name.toLowerCase().includes(this.searchTerm.toLowerCase()))
-      }else{
-        this.filteredUsers = this.users
+      const name = this.searchTerm.trim().toLowerCase()
+      if(name !== ''){
         if(this.showModalAdmins){
-          this.filteredUsersAdmin = this.users
+          this.filteredUsersAdmin = this.users.filter(user => user.name.toLowerCase().includes(name))
+        }else{
+          this.filteredUsers = this.users.filter(user => user.name.toLowerCase().includes(name))
+        }
+      }else{
+        if(this.showModalAdmins){
+          this.filteredUsersAdmin = [...this.users]
+        }else{
+          this.filteredUsers = [...this.users]
         }
       }
     }
@@ -160,6 +177,13 @@ export class CourseDetailsComponent {
     // Returns true if the userId matches any teacher in the course, otherwise false.
     isTeacher(userId: string): boolean{
       return this.selectedCourse?.teacher?.some((teacher: any) => (teacher._id._id || teacher._id) === userId) ?? false
+    }
+
+    isAdmin(): boolean{
+    return this.role === 'Admin'
+  }
+    isStudent(): boolean{
+      return this.role === 'Trainee'
     }
        
     openModal(){

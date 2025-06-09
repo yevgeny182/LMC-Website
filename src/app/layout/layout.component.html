@@ -1,6 +1,5 @@
 <!-- layout.component.html -->
 <div class="dashboard">
-
     <nav class="sidebar" id="sidebar" #sidebarRef>
       <img src="assets/LMCLogo.svg" alt="Logo" class="logo">
       <div class="user-profile" *ngIf="user">
@@ -10,9 +9,7 @@
           <span class="user-position">{{ user.user.role }}</span>
         </div>
       </div>
-      
       <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
-  
       <ul>
         <li>
           <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
@@ -113,7 +110,7 @@
           <hr style="margin: 6px 0; border: 0; border-top: 1px solid #ccc;" />
         </div>
         <div class="bottom-title" *ngIf="notifications.length > 0">Click the notification to mark as read.</div>
-        
+        <div class="bottom-title" *ngIf="notifications.length === 0">No notifications for now..</div>
       </ng-container>
 
   <!-- READ notifications -->
@@ -132,8 +129,6 @@
       </header>
       <router-outlet></router-outlet>
     </div>
-
-    
   
   </div>
   

@@ -6,8 +6,8 @@
     <button class="invite-btn" (click)="openAddCourseModal()">Add Course</button>
   
     <!-- Dropdown menu for selecting semester -->
-    <select class="semester-dropdown" [(ngModel)]="selectedSemester" [disabled]="defaultSem" (change)="onSemesterChange($event)">
-      <option value="" disabled> Select Semester...</option>
+    <select class="semester-dropdown" [(ngModel)]="selectedSemester" [disabled]="defaultSem">
+      <option value=""> Select Semester...</option>
       <option *ngFor="let sem of semesters" [value]="sem._id"
       >
     {{ sem.schoolYear }} ({{ sem.startDate | date:'MMM dd, yyyy' }} to {{ sem.endDate | date:'MMM dd, yyyy' }})
@@ -55,7 +55,8 @@
   <div class="table-wrapper">
   <!--   <hr /> -->
     <p>List of courses for other students to join</p>
-    <table *ngIf="courses.length > 0" class="users-table">
+    <ng-container *ngIf="filteredCourses.length > 0">
+    <table class="users-table">
       <thead>
         <tr>
           <th>Course Code</th>
@@ -89,6 +90,7 @@
         </tr>
       </tbody>
     </table>
+    </ng-container>
   </div>
 
  </div>

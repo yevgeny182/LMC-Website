@@ -1,3 +1,93 @@
 .content {
     padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
   }
+
+  .table-wrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  width: 100%;
+  max-height: 75vh;
+}
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: max-content;
+  table-layout: auto;
+}
+.users-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #5086C6;
+  color: white;
+  z-index: 2;
+  word-wrap: break-word;
+  text-align: left;
+}
+.users-table th,
+.users-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  word-break: break-word;
+  white-space: normal;
+  max-width: 150px;
+  overflow-wrap: break-word;
+}
+
+.users-table tbody tr:nth-child(even) {
+  background-color: #EFEFEF;
+}
+.users-table tbody tr:nth-child(odd) {
+  background-color: #FFFFFF;
+}
+
+.action-icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: transform 0.2s;
+}
+
+.action-icon:hover {
+  transform: scale(1.1);
+}
+  .view-reports-link {
+    font-size: 0.95rem;
+    color: #5086C6;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 500;
+    margin-left: auto;
+    margin-right: 10px;
+  }
+  
+  .view-reports-link:hover {
+    color: #4338ca;
+  }
+
+  .report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  }
+
+.empty-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Adjust height as needed */
+  text-align: center;
+  font-size: 1.2rem;
+}
+.semester-dropdown {
+  margin-bottom: 1rem;
+}
+
+.semester-dropdown select {
+  padding: 6px;
+  font-size: 1rem;
+  border-radius: 6px;
+}

@@ -1,0 +1,60 @@
+<div class="grade-student-container" [formGroup]="gradeForm" *ngIf="formReady">
+    <span class="material-icons back-icon" (click)="goBack()" style="cursor: pointer;">arrow_back</span> 
+  
+    <div class="course-info-card">
+      <div class="students-header">
+        <h2>📘 Course Information</h2>
+      </div>
+
+
+      <ng-template #noTeachers>
+        <span style="color: red;"><em>No teacher assigned yet.</em></span>
+      </ng-template>
+    
+      <p><strong>Course Code:</strong> {{ selectedCourse?.courseCode }}</p>
+      <p><strong>Course Title:</strong> {{ selectedCourse?.courseTitle }}</p>
+      <p><strong>Population:</strong> {{ selectedCourse?.students?.length }} / {{ selectedCourse?.population }}</p>
+      <p><strong>Course Units:</strong> {{ selectedCourse?.courseUnits }}</p>
+      <p><strong>Semester:</strong> {{ selectedCourse?.semester?.schoolYear }}, {{selectedCourse?.semester?.startDate | date:'MMM dd, yyyy'}}</p>
+            <p>
+        <strong>Teacher(s):</strong>
+        <ng-container *ngIf="selectedCourse?.teacher?.length > 0; else noTeachers">
+          <span *ngFor="let teacher of selectedCourse.teacher; let last = last">
+            {{ teacher.name }}<span *ngIf="!last">, </span>
+          </span>
+        </ng-container>
+      </p>
+    </div>
+
+    <div class="students-section">
+      <div class="students-header">
+        <h3>📜✍️ Grade Student</h3>
+        <p class="progress-info">progress saved by: </p>
+      </div>
+  
+      <div class="table-wrapper">
+          <table class="students-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Midterm Grade</th>
+              <th>Final Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let student of selectedCourse?.students; let a = index">
+              <td>{{ student._id?.name }}</td>
+              <td>{{ student._id?.email }}</td>
+              <td><input type="text" placeholder="Midterm (e.g 3.0)" [formControlName]="'midterm_' + a" /></td>
+              <td><input type="text" placeholder="Final (e.g 3.0)" [formControlName]="'final_' + a" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+      <div class="submit-button-container">
+        <button class="save-progress-button" title="save your progress?">Save Progress</button>
+          <button class="submit-button" title="submit student grades?"  (click)="submitGrades()">Submit</button>
+      </div>
+  </div>

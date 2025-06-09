@@ -9,6 +9,7 @@ import { AssessmentsComponent } from './assessments/assessments.component';
 import { CourseDetailsComponent } from './course-details/course-details.component';
 import { ReportsComponent } from './reports/reports.component';
 import { SettingsComponent } from './settings/settings.component';
+import { GradeStudentComponent } from './grade-student/grade-student.component';
 
 
 export const routes: Routes = [
@@ -27,6 +28,7 @@ export const routes: Routes = [
           { path: 'learning-course/:id', component: CourseDetailsComponent},
           { path: 'assessments', component: AssessmentsComponent},
           { path: 'reports', component: ReportsComponent},
+          { path: 'reports/grade-student/:id', component: GradeStudentComponent},
           { path: 'settings', component: SettingsComponent},
           { path: '**', redirectTo: 'dashboard' }
         ]

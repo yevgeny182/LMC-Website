@@ -2,14 +2,36 @@
 <app-layout *ngIf="user" [user]="user"></app-layout>
 <router-outlet></router-outlet>
 <main class="main">
-    <div class="container">
+<div class="page-body">
+  <div class="container">  
         <div class="left-panel">
-            <img src="assets/ategirl.svg" alt="Ate Girl">
+          <!-- Loading Bar -->
+           <div class="progress-container">
+                <div *ngFor="let img of images; let i = index" class="progress-bar">
+                  <div 
+                    class="progress-fill" 
+                    [style.width.%]="i === imageIndex ? progress : (i < imageIndex ? 100 : 0)"></div>
+                </div>
+              </div>
+              <div class="location-text" *ngIf="images[imageIndex].showLocation">
+                <span class="pin">📌</span> {{images[imageIndex].location}} 
+              </div>
+                <div class="image-wrapper" *ngIf="isUrl">
+                    <img 
+                      [src]="currentImage" 
+                      alt="carousel" 
+                      style="cursor: pointer;"
+                      class="carousel-landing" 
+                      [class.paused]="manualPause"
+                      (click)="togglePause()" 
+                      title="click to pause/unpause"
+                    />
+                </div>
         </div>
-    
+        
         <div class="right-panel">
-            <img src="assets/LMCLogo.svg" alt="LMC" class="lmc-log">
-            <h2>Welcome to LMC Admin App</h2>
+            <img src="assets/gamepad.svg" alt="LMC" class="lmc-log">
+            <h2>School University Portal</h2>
             
             <button type="button" class="buttonGmail">
               <img src="assets/google.svg" alt="google" class="google-logo">
@@ -28,8 +50,13 @@
                 </div>
                 <div class="forgot-password">Forgot Password?</div>
                 <button type="submit">Login</button> 
+                
             </form>
-        </div>
+              <!-- © 2025 LMC University. All rights reserved. -->
+              <footer class="footer"> © Yevgeny A. | 2025 University of [redacted] All rights reserved.</footer>
+        </div>   
     </div>
+</div>
+    
 </main>
 

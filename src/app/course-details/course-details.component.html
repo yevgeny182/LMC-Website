@@ -4,7 +4,7 @@
     <div class="course-info-card">
       <div class="students-header">
         <h2>📘 Course Information</h2>
-        <button class="add-students-button" (click)="openModalTeachers()">Assign Teacher</button>
+        <button class="add-students-button" (click)="openModalTeachers()" *ngIf="isAdmin()">Assign Teacher</button>
       </div>
       <p>
         <strong>Teacher(s):</strong>
@@ -46,7 +46,8 @@
             <tr *ngFor="let student of selectedCourse?.students">
               <td>{{ student._id?.name }}</td>
               <td>{{ student._id?.email }}</td>
-              <td>{{ student?.isAddedBy?.name}} </td>
+              <td *ngIf="isAdmin()">{{ student?.isAddedBy?._id === student._id._id ? 'Self-Enrolled' : student?.isAddedBy?.name}} </td>
+              <td *ngIf="isStudent()">{{ student?.isAddedBy?._id === student._id._id ? 'Self-Enrolled' : 'Admin'}} </td>
             </tr>
           </tbody>
         </table>
@@ -58,11 +59,12 @@
   <div class="modal-backdrop" *ngIf="showModal">
     <div class="modal">
      <div class="modal-header">
-      <h3>Select Students to Add / Remove</h3> 
+      <h3 *ngIf="isAdmin()">Select Students to Add / Remove</h3> 
+      <h3 *ngIf="isStudent()"> Enroll the course </h3>
       <button class="close-button" (click)="closeModal()"> &times; </button>
      </div>
-     <p>Below are the students that can be added in the course</p>
-
+     <p *ngIf="isAdmin()">Below are the students that can be added in the course</p>
+      <p *ngIf="isStudent()">Press the green positive button to enroll in the course press again to unenroll</p>
         <div class="search-container">
             <div class="search-wrapper">
               <input
@@ -72,8 +74,9 @@
                 placeholder="Search students..."
                 [(ngModel)]="searchTerm" 
                 (keydown.enter)="onSearch()" 
+                *ngIf="isAdmin()"
               />
-              <img src="assets/search-blue.svg" class="search-icon" alt="Search" (click)="onSearch()"/>
+              <img src="assets/search-blue.svg" class="search-icon" alt="Search" (click)="onSearch()" *ngIf="isAdmin()"/>
             </div>
           </div>
      <div class="table-container">
@@ -86,7 +89,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of filteredUsers">
+          <tr *ngFor="let user of displayedUsers">
             <td>{{ user.name }}</td>
             <td>{{ user.email }}</td>
             <td>

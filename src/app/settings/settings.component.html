@@ -4,9 +4,9 @@
         <p>Manage curriculum and school-wide configurations here.</p>
     </header>
 
-    <!-- Academic Settings Section  -->
-    
-    <div class="settings-section">
+    <!-- Academic Settings Section (ADMINS ONLY) -->
+    <div *ngIf="isAdmin()">
+    <div class="settings-section" >
         <div class="settings-section-header">
             <h2>Academic Settings</h2>
             <p class="view-semesters-link" (click)="openSemesterModal()">View Created Semesters</p>
@@ -28,7 +28,7 @@
             </div>
         </div>
         
-        <div class="form-group">
+        <div class="form-group" >
             <label for="schoolYear">School Year</label>
             <input type="text" id="schoolYear" name="schoolYear" placeholder="e.g., 1st Semester 2025-2026"
                 [(ngModel)]="schoolYear"
@@ -40,7 +40,7 @@
     </div>
 
     <!-- Grading Settings Section -->
-    <div class="settings-section">
+    <div class="settings-section" >
         <h2>Grading Settings</h2>
         <div class="form-group">
             <label for="gradingSystem">Grading System</label>
@@ -54,7 +54,7 @@
     </div>
     
     <!-- Enrollment Settings Section -->
-    <div class="settings-section">
+    <div class="settings-section" >
         <h2>Enrollment Settings</h2>
         <div class="form-group toggle-setting">
             <div class="toggle-row">
@@ -69,7 +69,7 @@
         </div>
     </div>
     
-        <div class="settings-section">
+        <div class="settings-section" >
             <div class="form-group toggle-setting">
                 <div class="toggle-row">
                     <label for="autoAssignCoursesToggle" class="toggle-label">Send account notification to student</label>
@@ -81,7 +81,7 @@
                 <small class="hint">Send student notification for grades and enrolled courses</small>
             </div>
         </div>
-        <div class="settings-section">
+        <div class="settings-section" >
             <div class="form-group toggle-setting">
                 <div class="toggle-row">
                     <label for="autoAssignCoursesToggle" class="toggle-label">Create Blocksectioning (Coming Soon)</label>
@@ -93,7 +93,7 @@
                 <small class="hint">This feature will be available soon.</small>
             </div>
         </div>
-        <div class="settings-section">
+        <div class="settings-section" >
             <div class="form-group toggle-setting">
                 <div class="toggle-row">
                     <label for="autoAssignCoursesToggle" class="toggle-label">Allow Cross-Enrollment (Coming Soon)</label>
@@ -199,6 +199,8 @@
         </div>
       </div>
     </div>
+  </div>
+
   </div>
 
 </section>

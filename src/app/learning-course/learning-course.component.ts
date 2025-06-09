@@ -45,11 +45,14 @@ export class LearningCourseComponent {
   viewDeleteCourseModalOpen: boolean = false;
   defaultSem: boolean = false;
   role: string | null = null;
+  filterCourse: any[] = []
+
 
   ngOnInit(): void {
     this.fetchCourse();
     this.fetchSemesters()
     this.role = this.userService.getRole()
+    this.onSemesterChange()
   }
 
 
@@ -187,6 +190,7 @@ export class LearningCourseComponent {
       next: (data: any) =>{
         this.semesters = data;
         const defaultSem = this.semesters.find(sem => sem.isDefault)
+
         if(defaultSem){
           this.selectedSemester = defaultSem._id
           this.course.semester = defaultSem._id
@@ -206,19 +210,26 @@ export class LearningCourseComponent {
     return this.semesters.some(sem => sem.isDefault)
   }
   get filteredCourses(){
-    if(!this.isDefaultSem || !this.selectedSemester){
+
+    if(!this.selectedSemester || this.selectedSemester === ''){
       return this.courses
     }
-    return this.courses.filter(course =>
-      course.semester === this.selectedSemester
-    )
+    return this.courses.filter(course =>{
+      const courseSemId = typeof course.semester === 'string' ? course.semester : course.semester?._id
+      return courseSemId === this.selectedSemester
+      
+    })
   }
   isAdmin(): boolean{
     return this.role === 'Admin'
   }
-  onSemesterChange(event: Event): void{
-    const selectElement = event.target as HTMLSelectElement
-    this.selectedSemester = selectElement.value
+  onSemesterChange(): void{
+    const semId = this.selectedSemester
+    if(semId){
+      this.filterCourse = this.courses.filter(course => course.semester === semId)
+    }else{
+      this.filterCourse = this.courses
+    }
   }
   closeModal() {
     this.viewCourseDetailsOpen = false;
@@ -232,7 +243,6 @@ export class LearningCourseComponent {
     this.viewCourseFormOpen = true;
   }
   closeAddCourseModal(){
-    console.log('close')
     this.viewCourseFormOpen = false;
   }
   updateModal(course: any) {

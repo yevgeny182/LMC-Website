@@ -25,9 +25,11 @@ export class SettingsComponent {
   editSemester: any = {}
   isDeleteSemesterModalOpen: boolean = false
   semestertoDeleteId: string | null = null
+  role: string | null = null
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar, private userService: UserService){
     const user = this.userService.getCurrentUser()
+    this.role = this.userService.getRole()
     if(user && user._id){
       this.isAddedBy = user._id;
     }
@@ -158,6 +160,12 @@ export class SettingsComponent {
       }
     })
   }
+   isAdmin(): boolean{
+    return this.role === 'Admin'
+  }
+    isStudent(): boolean{
+      return this.role === 'Trainee'
+    }
 
   openEditSemester(){
     this.isEditSemesterModalOpen = true

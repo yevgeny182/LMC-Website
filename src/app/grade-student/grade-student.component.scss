@@ -1,0 +1,76 @@
+.grade-student-container {
+  max-width: 75vw;
+  margin: 2rem auto;
+  padding: 1rem;
+  border-radius: 12px;
+  background: #f9f9f9;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  overflow: visible;
+}
+.course-info-card,
+.students-section {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  box-sizing: border-box;
+}
+.students-table,
+.trainee-table {
+  width: 100%;
+  min-width: 400px;
+  border-collapse: collapse;
+}
+
+.students-table th,
+.students-table td,
+.trainee-table th,
+.trainee-table td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: left;
+  word-break: break-word;
+}
+.students-table tbody tr:nth-child(odd) {
+  background-color: #FFFFFF; 
+}
+
+.students-table tbody tr:nth-child(even) {
+  background-color: #FFF8C5; 
+}
+.submit-button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.save-progress-button {
+  background-color: #5086C6;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.submit-button-container{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+.students-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.progress-info{
+  color:gray;
+  font-size: 0.9rem;
+  font-style: italic;
+}
