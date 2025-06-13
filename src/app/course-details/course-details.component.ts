@@ -159,7 +159,7 @@ export class CourseDetailsComponent {
      `http://localhost:5048/courses/${this.courseId}/assignTeacher`
      this.http.put(apiEndpoint, {teacherId: userId}).subscribe({
       next: () =>{
-        const message = isTeacher ? 'Teacher is now unassigned' : '🎶 She drives me crazy Like no one else, She drives me crazy And I cant help myself🎶' /* Teacher assigned successfully! */ 
+        const message = isTeacher ? 'Teacher is now unassigned' : 'Teacher assigned successfully!' /* Teacher assigned successfully! */ 
         this.showToast(message, 'default')
         this.selectedAdminId = isTeacher ? null : userId
         this.fetchCourseById(this.courseId!)

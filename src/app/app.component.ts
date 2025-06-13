@@ -27,10 +27,12 @@ export class AppComponent implements OnInit, OnDestroy {
   paused: boolean = false;
   manualPause: boolean = false
   isUrl: boolean = false;
+  enableAnimation = false;
+  currentIndex = 0
 
     images = [
-      { src: 'assets/teachingimage_1.svg', location: 'Ezekiel Moreno Bldg.', showLocation: false },
-      { src: 'assets/teachingimage_2.svg', location: 'Lapu-Lapu City, Cebu, Philippines', showLocation: false },
+      { src: 'assets/teachingimage_1.svg', location: 'Ezekiel Moreno Building', showLocation: true },
+      { src: 'assets/teachingimage_2.svg', location: 'Lapu-Lapu City, Cebu, Philippines', showLocation: true },
       { src: 'assets/teachingimage_3.svg', location: '', showLocation: false },
       { src: 'assets/teachingimage_4.svg', location: '', showLocation: false},
       { src: 'assets/franklin-school.jpg', location: 'Franklin, WV', showLocation: true},
@@ -38,6 +40,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
   imageIndex: number = 0;
   currentImage = this.images[0].src;
+
+private animateSlideChange() {
+  this.enableAnimation = true;
+  setTimeout(() => {
+    this.enableAnimation = false;
+  }, 500); // match CSS transition time
+}
 
   constructor(
     private router: Router, 
@@ -57,6 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         });
 
+        
   // Handle initial load
       const initialUrl = this.router.url;
       this.isUrl = initialUrl.includes('/login');
@@ -94,6 +104,7 @@ export class AppComponent implements OnInit, OnDestroy {
   nextImage(){
     this.imageIndex = (this.imageIndex + 1) % this.images.length
     this.currentImage = this.images[this.imageIndex].src
+    this.animateSlideChange();
     this.progress = 0
     /* console.log(this.currentImage) */
   }
@@ -106,6 +117,25 @@ export class AppComponent implements OnInit, OnDestroy {
     this.progressSubscritption?.unsubscribe()
     this.endSlideShow()
   }
+
+  nextSlide() {
+  if (this.imageIndex < this.images.length - 1) {
+    this.imageIndex++;
+    this.currentImage = this.images[this.imageIndex].src;
+    this.animateSlideChange();
+    this.progress = 0;
+  }
+}
+
+prevSlide() {
+  if (this.imageIndex > 0) {
+    this.imageIndex--;
+    this.currentImage = this.images[this.imageIndex].src;
+    this.animateSlideChange();
+    this.progress = 0;
+  }
+}
+
 
   togglePasswordVisibility() {
     this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';

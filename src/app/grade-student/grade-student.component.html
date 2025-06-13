@@ -46,15 +46,24 @@
             <tr *ngFor="let student of selectedCourse?.students; let a = index">
               <td>{{ student._id?.name }}</td>
               <td>{{ student._id?.email }}</td>
-              <td><input type="text" placeholder="Midterm (e.g 3.0)" [formControlName]="'midterm_' + a" /></td>
-              <td><input type="text" placeholder="Final (e.g 3.0)" [formControlName]="'final_' + a" /></td>
+              <td><input type="text" placeholder="Midterm (e.g 3.0)" [formControlName]="'midterm_' + a" 
+                [ngClass]="{'changed': gradeForm.controls['midterm_' + a]?.dirty}"
+                /></td>
+              <td><input type="text" placeholder="Final (e.g 3.0)" [formControlName]="'final_' + a" 
+                [ngClass]="{'changed': gradeForm.controls['final_' + a]?.dirty}"
+                /></td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+    <!--  -->
+     <!--  -->
       <div class="submit-button-container">
         <button class="save-progress-button" title="save your progress?">Save Progress</button>
-          <button class="submit-button" title="submit student grades?"  (click)="submitGrades()">Submit</button>
+          <button class="submit-button" 
+          title="submit student grades?"
+          [ngClass] = "{'graded': isMidtermGraded || isFinalGraded}"  
+          (click)="handleButtonAction()">{{getSubmitLabel()}}</button>
       </div>
   </div>

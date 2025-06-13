@@ -1,4 +1,3 @@
-
 <app-layout *ngIf="user" [user]="user"></app-layout>
 <router-outlet></router-outlet>
 <main class="main">
@@ -16,18 +15,30 @@
               <div class="location-text" *ngIf="images[imageIndex].showLocation">
                 <span class="pin">📌</span> {{images[imageIndex].location}} 
               </div>
-                <div class="image-wrapper" *ngIf="isUrl">
-                    <img 
-                      [src]="currentImage" 
-                      alt="carousel" 
-                      style="cursor: pointer;"
-                      class="carousel-landing" 
-                      [class.paused]="manualPause"
-                      (click)="togglePause()" 
-                      title="click to pause/unpause"
-                    />
+                <div class="carousel-wrapper" *ngIf="isUrl">
+                  <button class="carousel-btn left" (click)="prevSlide()">
+                    &#10094;
+                  </button>
+                    <div 
+                      class="carousel-container" 
+                      [style.transform]="'translateX(-' + imageIndex * 100 + '%)'"
+                    >
+                      <div class="carousel-slide" *ngFor="let img of images">
+                        <img 
+                          [src]="img.src" 
+                          class="carousel-image"
+                          (click)="togglePause()"
+                          alt="carousel"
+                          title="click to pause/unpause"
+                        />
+                      </div>
+                    </div>
+                    <button class="carousel-btn right" (click)="nextSlide()">
+                    &#10095;
+                  </button>
+                  </div>
+                
                 </div>
-        </div>
         
         <div class="right-panel">
             <img src="assets/gamepad.svg" alt="LMC" class="lmc-log">
@@ -52,11 +63,9 @@
                 <button type="submit">Login</button> 
                 
             </form>
-              <!-- © 2025 LMC University. All rights reserved. -->
               <footer class="footer"> © Yevgeny A. | 2025 University of [redacted] All rights reserved.</footer>
         </div>   
     </div>
 </div>
     
 </main>
-

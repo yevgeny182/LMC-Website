@@ -48,6 +48,11 @@
   border-radius: 6px;
   cursor: pointer;
 }
+.submit-button.graded {
+  background-color: orange;
+  border: 1px solid darkorange;
+}
+
 .save-progress-button {
   background-color: #5086C6;
   color: #fff;
