@@ -31,11 +31,11 @@ export class AppComponent implements OnInit, OnDestroy {
   currentIndex = 0
 
     images = [
-      { src: 'assets/teachingimage_1.svg', location: 'Ezekiel Moreno Building', showLocation: true },
-      { src: 'assets/teachingimage_2.svg', location: 'Lapu-Lapu City, Cebu, Philippines', showLocation: true },
+      { src: 'assets/teachingimage_1.svg', location: 'Insert Location Here', showLocation: true },
+      { src: 'assets/teachingimage_2.svg', location: 'Insert Location Here', showLocation: true },
       { src: 'assets/teachingimage_3.svg', location: '', showLocation: false },
       { src: 'assets/teachingimage_4.svg', location: '', showLocation: false},
-      { src: 'assets/franklin-school.jpg', location: 'Franklin, WV', showLocation: true},
+      { src: 'assets/santamonicapier.jpg', location: 'Santa Monica, CA, USA', showLocation: true},
     ];
 
   imageIndex: number = 0;
@@ -121,19 +121,23 @@ private animateSlideChange() {
   nextSlide() {
   if (this.imageIndex < this.images.length - 1) {
     this.imageIndex++;
+  }else{
+    this.imageIndex = 0
+  }
     this.currentImage = this.images[this.imageIndex].src;
     this.animateSlideChange();
     this.progress = 0;
-  }
 }
 
 prevSlide() {
   if (this.imageIndex > 0) {
     this.imageIndex--;
-    this.currentImage = this.images[this.imageIndex].src;
+  }else{
+    this.imageIndex = this.images.length - 1
+  }
+  this.currentImage = this.images[this.imageIndex].src;
     this.animateSlideChange();
     this.progress = 0;
-  }
 }
 
 
