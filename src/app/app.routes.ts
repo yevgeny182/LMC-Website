@@ -10,6 +10,7 @@ import { CourseDetailsComponent } from './course-details/course-details.componen
 import { ReportsComponent } from './reports/reports.component';
 import { SettingsComponent } from './settings/settings.component';
 import { GradeStudentComponent } from './grade-student/grade-student.component';
+import { AnnouncementsComponent } from './announcements/announcements.component';
 
 
 export const routes: Routes = [
@@ -30,6 +31,7 @@ export const routes: Routes = [
           { path: 'reports', component: ReportsComponent},
           { path: 'reports/grade-student/:id', component: GradeStudentComponent},
           { path: 'settings', component: SettingsComponent},
+          { path: 'announcements', component: AnnouncementsComponent},
           { path: '**', redirectTo: 'dashboard' }
         ]
       },

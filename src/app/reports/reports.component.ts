@@ -18,7 +18,6 @@ export class ReportsComponent {
   semesters: any[] = [];
   selectedSemester: string =''
   role: string | null = null;
-  defaultSem: boolean = false
   defaultSemester: any = null
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar, private userService: UserService){}
@@ -76,7 +75,7 @@ export class ReportsComponent {
       const courseSemester = typeof course.semester === 'string' ? course.semester : course.semester?._id
       const sameSem = courseSemester === this.selectedSemester
       const isSameTeacher = course.teacher?.some((t:any) => t.name === userId.name)
-/*       console.log(`[DEBUG] Course: ${course.courseTitle}`);
+      /* console.log(`[DEBUG] Course: ${course.courseTitle}`);
       console.log(`  Semester Match: ${sameSem}`);
       console.log(`  Teacher Match: ${isSameTeacher}`); */
 

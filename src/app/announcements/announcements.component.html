@@ -1,0 +1,113 @@
+
+
+<section class="content">
+  <h1>Announcements</h1>
+  <div class="announcements-header" *ngIf="isAdmin()">
+    Create announcements for your classes
+  </div>
+  <div class="announcements-header" *ngIf="isTrainee()">
+    View teacher announcements here
+  </div>
+
+  <div class="grade-student-container" *ngIf="isAdmin()">
+    <div class="semester-dropdown" *ngIf="semesters.length > 0">
+      <label for="courseSelect"> Create announcement for course: </label>
+        <select id="courseSelect" [(ngModel)]="selectedCourseId" (ngModelChange)="onCourseSelected($event)"> 
+          <option *ngFor="let course of teacherNames" [value]="course._id" [title]="course.courseCode + ' - ' + course.courseTitle">
+              {{course.courseCode}} 
+          </option>
+        </select>
+    </div>
+    <div class="announcement-form" *ngIf="isAdmin()">
+      <textarea 
+        id="announcementText" 
+        [(ngModel)]="announcementText" 
+        placeholder="Type your announcement here..." 
+        rows="4">
+      </textarea>
+      <label for="fileInput"> Add attachments: </label>
+        <input 
+        type="file"
+        id="fileInput"
+        (change)="onFileSelected($event)"
+        multiple
+        accept=".pdf, .doc, .docx, .jpg, .png, .jpeg"
+        />
+        
+     <div class="file-preview" *ngIf="selectedFiles.length > 0">
+      File(s) Selected: 
+      <div *ngFor="let file of selectedFiles; let a  = index" class="file-item"> 
+       
+        <span class="file-name" [title]="file.name">{{ file.name }}</span>
+         <button class="remove-btn" (click)="removeFile(a)" title="remove file?"> X </button>
+      </div>
+      
+     </div>
+        <div class="submit-button-container">
+            <button (click)="createAnnouncement()" 
+            [disabled]="!selectedCourseId || !announcementText.trim() " 
+            class="create-btn"
+            [title]="(!selectedCourseId || !announcementText.trim() ? 'Select a course and type your announcement' : 'Click me to post')"
+            >
+              Post Announcement
+            </button>
+        </div>
+    </div>
+  
+</div>
+<div class="grade-student-container" *ngIf="isAdmin()">
+  <div class="announcement-form">
+    <label for="createdAnnouncements"> <b> View Posted Announcements: </b></label>
+
+    <div class="semester-dropdown">
+      <label for="courseSelect"> Show announcement for course: </label>
+        <select id="courseSelect" [(ngModel)]="selectedCourseIdForViewing" (ngModelChange)="onViewCourseSelected($event)"> 
+          <option *ngFor="let course of teacherNames" [value]="course._id">
+              {{course.courseCode}} 
+          </option>
+        </select>
+    </div>
+
+    <div class="announcement-results" *ngIf=" selectedCourseIdForViewing ">
+      <h3>Posts:</h3>
+      <div *ngFor="let announce of filteredAnnouncement" class="announcement-card">
+        
+          <div class="user-box">
+            <img src="assets/user-default.svg" alt="User Profile" class="user-icon" />
+                  <div class="user-details">
+                          <div class="user-header">
+                              <div class="user-name-role">
+                                  <p class="user-name">{{ announce.userId.name }} </p>
+                                  <p class="user-role"> {{announce.userId.role}} </p>
+                                  <p class="post-date"> {{announce.createdAt | date:'MMMM dd, yyyy @ hh:mm a '}} </p>
+                              </div>
+                               <div class="action-buttons">
+                                  <img src="assets/edit.svg"  class="action-icon" title="Update post?" (click)="openUpdateModal(announce.text)"/>
+                                  <img src="assets/trash.svg" class="action-icon" title="Delete post?"/>    
+                              </div>
+                          </div>
+                  </div>
+          </div>
+          <p class="announcement-text">{{ announce.text }} </p>  
+      </div>
+     
+        <div *ngIf="selectedCourseIdForViewing && filteredAnnouncement.length === 0">
+          <p>No posts available for this course.</p>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+</section>
+<!-- UPDATE -->
+  <div class="modal" *ngIf="isUpdateModal">
+    <div class="modal-content">
+        <span class="close" (click)="closeUpdateModal()"> &times; </span>
+        <h2>Update Post</h2>
+      <textarea [(ngModel)]="announcementText" rows="4" cols="40"></textarea>
+      <button (click)="closeUpdateModal()">Update</button>
+        <button (click)="closeUpdateModal()">Cancel</button>
+    </div>
+  </div>
+

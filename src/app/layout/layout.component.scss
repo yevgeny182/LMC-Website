@@ -167,11 +167,13 @@ body {
 }
 
 .user-name {
-  font-weight: bold;
-  font-size: 16px;
+  font-weight: 500;
+  font-size: 1rem;
+  margin: 0;
 }
 
 .user-position {
+  font-weight: 300;
   font-size: 14px;
   color: #ccc;
 }
@@ -204,30 +206,31 @@ body {
   width: 350px;
   z-index: 999;
   border-radius: 8px;
+
+    p {
+    margin: 0;
+    }
+
+      ul{
+        list-style: none;
+          padding: 0;
+          margin: 0;
+      
+        li{
+          font-size: 14px;
+          line-height: 1.4;
+          border-bottom: 1px solid #ddd;
+          padding-bottom: 5px;
+          margin-bottom: 8px;
+        
+          &:last-child{
+          border-bottom: none;
+          margin-bottom: 0;
+          }
+        }
+    }
 }
 
-.notification-popup p {
-  margin: 0;
-}
-
-.notification-popup ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.notification-popup ul li {
-  font-size: 14px;
-  line-height: 1.4;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 5px;
-  margin-bottom: 8px;
-}
-
-.notification-popup ul li:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-}
 .bottom-date{
   display: flex;
   justify-content: space-between;
