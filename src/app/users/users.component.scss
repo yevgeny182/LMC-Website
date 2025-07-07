@@ -2,29 +2,35 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-}
-.users-table thead th {
+
+  thead{
+    th{
   position: sticky;
   top: 0;
   background-color: #5086C6; /* Or your table background */
   color: white;
   z-index: 2;
   text-align: left;
+    }
+  }
+   th, td{
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    tbody{
+      tr{
+        &:nth-child(even){
+          background-color: #EFEFEF;
+        }
+        &:nth-child(odd){
+          background-color: #FFFFFF;
+        }
+      }
+    }
 }
+   
 
-.users-table th, .users-table td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.users-table tbody tr:nth-child(even) {
-  background-color: #EFEFEF; /* Even row color */
-}
-
-.users-table tbody tr:nth-child(odd) {
-  background-color: #FFFFFF; /* Odd row color */
-}
 
 .action-icon {
   width: 20px; /* Adjust icon size */
@@ -32,11 +38,11 @@
   cursor: pointer; /* Change cursor on hover */
   margin: 0 5px; /* Add margin between icons */
   transition: transform 0.2s; /* Add transition for hover effect */
+  &:hover{
+     transform: scale(1.1);
+  }
 }
 
-.action-icon:hover {
-  transform: scale(1.1); /* Slightly enlarge the icon on hover */
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -120,11 +126,13 @@
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease;
+
+  &:hover{
+    background-color: #2f9440;
+  }
+
 }
 
-.invite-btn:hover {
-  background-color: #2f9440;
-}
 
 /* === Header === */
 .users-header {
@@ -164,14 +172,14 @@
   float: right;
   font-size: 28px;
   font-weight: bold;
-}
 
-.close:hover,
-.close:focus {
+  &:hover, :focus{
   color: black;
   text-decoration: none;
   cursor: pointer;
+  }
 }
+
 
 .bottombar-wrapper {
   display: flex;
@@ -199,17 +207,16 @@
   background-color: #eee;
   cursor: pointer;
   border-radius: 4px;
-}
-
-.page-btn.active {
+  &:active{
   background-color: #4B86BD;
   color: white;
-}
-
-.page-btn:disabled {
+  }
+  &:disabled{
   background-color: #ccc;
   cursor: not-allowed;
+  }
 }
+
 .table-and-pagination-wrapper {
   max-height: 60vh;
   overflow-y: auto;

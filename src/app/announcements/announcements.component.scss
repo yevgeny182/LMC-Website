@@ -1,0 +1,271 @@
+
+  .content {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .grade-student-container {
+  max-width: 75vw;
+  margin: 2rem auto;
+  padding: 1rem;
+  border-radius: 12px;
+  background: #f9f9f9;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  overflow: visible;
+}
+  .announcements-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  }
+.semester-dropdown {
+  margin-bottom: 1rem;
+}
+
+.semester-dropdown select {
+  padding: 6px;
+  font-size: 1rem;
+  border-radius: 6px;
+}
+select {
+  max-width: 600px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.announcement-form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 75vw;
+}
+
+textarea {
+  resize: vertical;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.create-btn {
+  background-color: #28a745;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  align-self: flex-start;
+  border-radius: 4px;
+  transition: 0.2s ease-in-out;
+  &:hover{
+    background-color: #218838;
+  }
+  &:disabled{
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+
+
+.submit-button-container{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+input[type="file"] {
+  margin-top: 0.5rem;
+  padding: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  font-size: 0.95rem;
+
+}
+.file-preview {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem auto;
+  padding: 0.75rem;
+  max-width: 100%;
+  width: 50%;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+}
+
+.file-preview p:hover {
+  background-color: #f0f0f0;
+}
+.file-item {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  overflow: hidden; 
+}
+.file-name{
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.remove-btn {
+  background-color: transparent;
+  border: none;
+  color: #d9534f;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 12px;
+}
+
+.remove-btn:hover {
+  color: #c9302c;
+}
+
+
+.announcement-card{
+  background-color: #fff;
+  border: 1px solid #e1e4e8;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 16px;
+  transition: 0.4s;
+
+  &:hover{
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+      .user-box{
+      display: flex;
+      align-items: flex-start;
+    }
+    .user-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      margin-right: 16px;
+      object-fit: cover;
+      border: 1px solid #ccc;
+    }
+
+      .user-details {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-width: 0;
+      }
+        .user-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          flex-wrap: wrap;
+      }
+        .user-name-role{
+        display: flex;
+        flex-direction: column;
+      }
+        .user-name {
+        word-wrap: break-word;
+        font-weight: 500;
+          margin: 0.2rem;
+        font-size: 1rem;
+        color: #333;
+      }
+    .user-role, .post-date{
+      font-size: 0.85rem;
+      color: #666;
+      margin: 0.2rem;
+      line-height: 1.2;
+    }
+
+    .announcement-text {
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.3; 
+
+      margin-bottom: 0.25rem; 
+      word-wrap: break-word;
+      text-align: left;
+      padding-left: 12px;
+    }
+
+}
+.action-icon{
+    width: 20px; /* Adjust icon size */
+    height: 20px; /* Adjust icon size */
+    cursor: pointer; /* Change cursor on hover */
+    margin: 0 5px; /* Add margin between icons */
+    transition: transform 0.2s; /* Add transition for hover effect */
+    &:hover{
+      transform: scale(1.1);
+    }
+}
+.action-buttons{
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  align-items: flex-start;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+
+  &:hover, :focus{
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  }
+}
+
+
+
+
+
+
+
