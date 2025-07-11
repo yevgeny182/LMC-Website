@@ -145,7 +145,6 @@
 
 /* === Modal === */
 .modal {
-  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -237,7 +236,6 @@
   cursor: pointer;
   border-radius: 6px;
   border: none;
-  
 }
 .delete-btn{
   display: flex;
