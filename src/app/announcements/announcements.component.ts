@@ -283,31 +283,7 @@ onViewCourseSelected(courseId: string) {
     if(file)
       file.value = ''
   }
-  async uploadFile(file: File): Promise<void> {
-    const {data, error} = await supabase.storage.from('uploads').upload(`user-uploads/${file.name}`, file, {
-      cacheControl: '3600',
-      upsert: false,
-    })
-    if(error){
-      this.snackBar.open('Upload Failed!', 'Close', {
-          duration: 4000,
-          panelClass: ['snack-error'],
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-      })
-      return;
-    }
-    console.log('Upload success!', data)
-  }
-  startUpload(): void{
-    if(!this.selectedFiles || this.selectedFiles.length === 0 ){
-      console.warn('no files selected!')
-      return;
-    }
-    this.selectedFiles.forEach(file => {
-      this.uploadFile(file)
-    })
-  }
+
   openUpdateModal(text: any){
     this.announcementTextToUpdate = text
     this.isUpdateModal = true;
