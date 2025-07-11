@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { InviteUserModalComponent } from '../invite-user-modal/invite-user-modal.component';
 import { UpdateUserModalComponent } from '../update-user-modal/update-user-modal.component';
@@ -29,9 +29,9 @@ export class UsersComponent {
   filteredUsers: any[] = []
   selectedFilter: string = 'name'
 
-
-  constructor(private router: Router, private snackBar: MatSnackBar, private http: HttpClient) {}
-
+ private http = inject(HttpClient)
+ private snackBar =  inject(MatSnackBar)
+ 
   ngOnInit() {
     this.loadUsers();
   }
@@ -47,15 +47,15 @@ export class UsersComponent {
 
 
   loadUsers() {
-    this.http.get<any[]>('http://localhost:5048/users').subscribe(
-      (data) => {
+    this.http.get<any[]>('http://localhost:5048/users').subscribe({
+      next: (data) => {
         this.users = data;
         this.filteredUsers = data
       },
-      (err) => {
+      error: (err) => {
         console.error('Error fetching data', err);
       }
-    );
+  });
   }
   
 
@@ -79,10 +79,8 @@ export class UsersComponent {
   }
 
   openUpdateModal(user: any) {
-
     this.userToEdit = user;
     this.isOpenEditModal = true; 
-    console.log(this.isOpenEditModal)
   }
 
   closeUpdateModal() {

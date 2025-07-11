@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,6 +22,8 @@ interface User{
 })
 
 export class CourseDetailsComponent {
+    private http = inject(HttpClient)
+    
     courseId: string | null = null
     selectedCourse: any = null;
     users: User[] = []
@@ -34,8 +36,7 @@ export class CourseDetailsComponent {
     teacher: any = null;
     role: string | null = null
 
-    constructor(private route: ActivatedRoute, 
-      private http: HttpClient, 
+    constructor(private route: ActivatedRoute,
       private router: Router, 
       private snackBar: MatSnackBar,
       private userService: UserService){}

@@ -10,27 +10,34 @@
   </div>
 
   <div class="grade-student-container" *ngIf="isAdmin()">
-    <div class="semester-dropdown" *ngIf="semesters.length > 0">
+    <div class="semester-dropdown" *ngIf="selectedSemester.length > 0"> 
+      <!-- drop down-->
       <label for="courseSelect"> Create announcement for course: </label>
-        <select id="courseSelect" [(ngModel)]="selectedCourseId" (ngModelChange)="onCourseSelected($event)"> 
-          <option *ngFor="let course of teacherNames" [value]="course._id" [title]="course.courseCode + ' - ' + course.courseTitle">
+        <select id="courseSelect" [disabled]="isLoading || filteredCourses.length === 0"
+          [(ngModel)]="selectedCourseId"
+          (ngModelChange)="onCourseSelected($event)"> 
+          <option *ngFor="let course of filteredCourses" [value]="course._id" [title]="course.courseCode + ' - ' + course.courseTitle">
               {{course.courseCode}} 
           </option>
         </select>
     </div>
     <div class="announcement-form" *ngIf="isAdmin()">
+      <!-- text field -->
       <textarea 
         id="announcementText" 
         [(ngModel)]="announcementText" 
         placeholder="Type your announcement here..." 
         rows="4">
       </textarea>
+
+      <!-- file attachment -->
       <label for="fileInput"> Add attachments: </label>
         <input 
         type="file"
         id="fileInput"
         (change)="onFileSelected($event)"
         multiple
+        class="file-upload"
         accept=".pdf, .doc, .docx, .jpg, .png, .jpeg"
         />
         
@@ -55,21 +62,23 @@
     </div>
   
 </div>
-<div class="grade-student-container" *ngIf="isAdmin()">
+<div class="grade-student-container" *ngIf="isAdmin() || isTrainee()">
   <div class="announcement-form">
     <label for="createdAnnouncements"> <b> View Posted Announcements: </b></label>
 
-    <div class="semester-dropdown">
+    <div class="semester-dropdown" *ngIf="filteredCourses.length > 0">
       <label for="courseSelect"> Show announcement for course: </label>
-        <select id="courseSelect" [(ngModel)]="selectedCourseIdForViewing" (ngModelChange)="onViewCourseSelected($event)"> 
-          <option *ngFor="let course of teacherNames" [value]="course._id">
+        <select  id="courseSelect" [disabled]="isLoading || filteredCourses.length === 0"
+          [(ngModel)]="selectedCourseIdForViewing"
+          (ngModelChange)="onViewCourseSelected($event)"> 
+          <option *ngFor="let course of filteredCourses" [value]="course._id">
               {{course.courseCode}} 
           </option>
         </select>
     </div>
 
-    <div class="announcement-results" *ngIf=" selectedCourseIdForViewing ">
-      <h3>Posts:</h3>
+    <div class="announcement-results" *ngIf=" selectedCourseIdForViewing && isAdmin() ">
+      <h3>Feed:</h3>
       <div *ngFor="let announce of filteredAnnouncement" class="announcement-card">
         
           <div class="user-box">
@@ -78,26 +87,82 @@
                           <div class="user-header">
                               <div class="user-name-role">
                                   <p class="user-name">{{ announce.userId.name }} </p>
-                                  <p class="user-role"> {{announce.userId.role}} </p>
-                                  <p class="post-date"> {{announce.createdAt | date:'MMMM dd, yyyy @ hh:mm a '}} </p>
+                                  <p class="user-role"> {{announce.userId.role}}  -  {{announce.courseId.courseCode}} </p>
+                                  <p class="post-date"> {{announce.createdAt | date:'MMM dd, yyyy @ hh:mm a '}} </p>
                               </div>
                                <div class="action-buttons">
                                   <img src="assets/edit.svg"  class="action-icon" title="Update post?" (click)="openUpdateModal(announce.text)"/>
-                                  <img src="assets/trash.svg" class="action-icon" title="Delete post?"/>    
+                                  <img src="assets/trash.svg" class="action-icon" title="Delete post?" (click)="openDeleteModal(announce)"/>    
                               </div>
                           </div>
                   </div>
           </div>
           <p class="announcement-text">{{ announce.text }} </p>  
+          <div class="file-badges" *ngIf="announce.fileName?.length && announce.url?.length">
+            <div *ngFor="let document of announce.fileName; let a = index" class="file-badge">
+              <a
+              [href]="announce.url[a]"
+              [download]="document"
+              target="_blank"
+              rel="noopener"
+              >
+               <div class="file-icon-label">
+                <img src="assets/file-icon.svg" class="file-icon" alt="File Icon" />
+                  <span class="file-name">  {{document}} </span>
+               </div>
+              </a>
+            </div>
+          </div>
       </div>
-     
-        <div *ngIf="selectedCourseIdForViewing && filteredAnnouncement.length === 0">
+      
+
+        <div *ngIf="isAdmin() && filteredAnnouncement.length === 0">
           <p>No posts available for this course.</p>
         </div>
     </div>
+    
+    <!-- THIS IS FOR THE STUDENT'S VIEW -->
+     <div class="announcement-results" *ngIf=" filteredAnnouncement.length > 0 && isTrainee() ">
+      <h3>Feed:</h3>
+      <div *ngFor="let announce of filteredAnnouncement" class="announcement-card">
+        
+          <div class="user-box">
+            <img src="assets/user-default.svg" alt="User Profile" class="user-icon" />
+                  <div class="user-details">
+                          <div class="user-header">
+                              <div class="user-name-role">
+                                  <p class="user-name">{{ announce.userId.name }} </p>
+                                  <p class="user-role"> <!-- {{announce.userId.role}}  -  --> {{announce.courseId.courseCode}} </p>
+                                  <p class="post-date"> {{announce.createdAt | date:'MMM dd, yyyy @ hh:mm a '}} </p>
+                              </div>
+                          </div>
+                  </div>
+          </div>
+          <p class="announcement-text">{{ announce.text }} </p> 
+            <div class="file-badges" *ngIf="announce.fileName?.length && announce.url?.length">
+            <div *ngFor="let document of announce.fileName; let a = index" class="file-badge">
+              <a
+              [href]="announce.url[a]"
+              [download]="document"
+              target="_blank"
+              rel="noopener"
+              >
+               <div class="file-icon-label">
+                <img src="assets/file-icon.svg" class="file-icon" alt="File Icon" />
+                  <span class="file-name">  {{document}} </span>
+               </div>
+              </a>
+            </div>
+          </div> 
+      </div>
+    </div>
   </div>
-</div>
+        <div *ngIf="isTrainee() && emptyStudentAnnouncement ">
+          <p>This course does not have any announcements</p>
+        </div>
 
+</div>
+           
 
 </section>
 <!-- UPDATE -->
@@ -105,9 +170,22 @@
     <div class="modal-content">
         <span class="close" (click)="closeUpdateModal()"> &times; </span>
         <h2>Update Post</h2>
-      <textarea [(ngModel)]="announcementText" rows="4" cols="40"></textarea>
+      <textarea [(ngModel)]="announcementTextToUpdate" rows="5" cols="50"></textarea>
       <button (click)="closeUpdateModal()">Update</button>
         <button (click)="closeUpdateModal()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="modal" *ngIf="isDeleteModal">
+    <div class="modal-content">
+      <span class="close" (click)="closeDeleteModal()"> &times; </span>
+      <h2>Delete Post</h2>
+      <p> Are you sure you want to delete the announcement</p>
+      <p class="delete-preview">"{{announcementTextToDelete.text}}"?</p>
+      <div class="button-container">
+        <button class="no-delete-btn" (click)="closeDeleteModal()"> Cancel </button>
+          <button class="delete-btn" (click)="deleteAnnouncement(announcementTextToDelete)"> Confirm </button>
+      </div>
     </div>
   </div>
 

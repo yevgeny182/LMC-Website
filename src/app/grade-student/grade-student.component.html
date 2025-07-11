@@ -47,10 +47,10 @@
               <td>{{ student._id?.name }}</td>
               <td>{{ student._id?.email }}</td>
               <td><input type="text" placeholder="Midterm (e.g 3.0)" [formControlName]="'midterm_' + a" 
-                [ngClass]="{'changed': gradeForm.controls['midterm_' + a]?.dirty}"
+                [ngClass]="{'changed': gradeForm.controls['midterm_' + a].dirty}"
                 /></td>
               <td><input type="text" placeholder="Final (e.g 3.0)" [formControlName]="'final_' + a" 
-                [ngClass]="{'changed': gradeForm.controls['final_' + a]?.dirty}"
+                [ngClass]="{'changed': gradeForm.controls['final_' + a].dirty}"
                 /></td>
             </tr>
           </tbody>
